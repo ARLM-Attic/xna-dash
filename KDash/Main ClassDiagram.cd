@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="KDash.XNADash">
+    <Position X="6" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIYAEEGAAgAIAwIAQAFAAEUAAAAEAAiABAAAAAAAEAQ=</HashCode>
+      <FileName>XNADash.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="camera" />
+      <Field Name="sceneGraph" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="KDash.Level.Level">
+    <Position X="3" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gRAAAAACBIAkBgYAQAEGIEIHBGACAAAMAEBAQABEAEA=</HashCode>
+      <FileName>Level\Level.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="factory" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Field Name="tileGrid" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="KDash.Level.Tile">
+    <Position X="6" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAIBIgAAAAgAAAAAEAAAAAAAAAAAAIAAAAAAAA=</HashCode>
+      <FileName>Level\Tile.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="TileType" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="KDash.Level.TileFactory">
+    <Position X="6" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAABEAAAAAAABAAAAAAAA=</HashCode>
+      <FileName>Level\TileFactory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KDash.Animation.Camera2D">
+    <Position X="3" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACABAgAAAAAgACAhAAAAAAABBhAAAAAABAAEIAAAAAA=</HashCode>
+      <FileName>Animation\Camera2D.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KDash.Animation.Scene2DNode">
+    <Position X="12" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAgAAAAAAAAAAAAAgAAAAAAAAAAAAA=</HashCode>
+      <FileName>Animation\Scene2DNode.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="XNADash.Animation.SceneGraph">
+    <Position X="9" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACAAAEgABAAAAAAAAAIAAAABIAAAAAAEAAAA=</HashCode>
+      <FileName>Animation\SceneGraph.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Field Name="currentSceneList" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="KDash.Sprites.Sprite">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAgAgABAABAAAABAAAgCABAACAABAAIA=</HashCode>
+      <FileName>Sprites\Sprite.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KDash.Sprites.EnemySprite">
+    <Position X="0.5" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAIAADAAAAAAAAAAAACBAAAAAAAAAAgBAAAQAAAAAA=</HashCode>
+      <FileName>Sprites\EnemySprite.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="KDash.Sprites.MovingSprite">
+    <Position X="0.5" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAIAAAAAAIAAARAABAAAAAAQIRAAAAAAAQAA=</HashCode>
+      <FileName>Sprites\MovingSprite.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="KDash.Level.TileTypeEnum">
+    <Position X="9" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIBACAAAAAAAAAAAEAAAAAgAAAAAgQAIAAAAAAAAAA=</HashCode>
+      <FileName>Level\TileTypeEnum.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

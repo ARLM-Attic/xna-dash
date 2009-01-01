@@ -1,0 +1,35 @@
+﻿
+XNA Dash V1.0
+-------------
+
+
+* General concept
+
+XNA Dash is a clone of the old Boulder Dash, google this and you will find lots of information about this very simple a poplular game.
+
+The general idea is this: We have the player who is a little ant-like character that must collect a certain amount of diamonds in the game world in order to proceed to the next level. This is complicated by the fact that in this game world there's dangers. First we have the dangerous butterfly and firefly who can be trapped under ground or traversing the game world if there's room for it to move. The player is the only one who can dig in the ground and thus make tunnels in which everyone can move, but the ground is full of rocks and the player can get hit by these rocks if he is not carefull. This also applies for the enemies in the game, so it is possible for the player to dug a tunnel and lure an enemy into it and at the right time - release the rock so it hits the enemy and kills it. When an enemy dies it is turned into diamonds!
+In some levels we also have lava that slowly spreads to any area that has earth or is empty, when the player or enemies touch this they die, and is turned into diamonds.
+
+In order to make the game a little bit more interesting, there's a time element to take into account. The level must be completed before time runs out.
+
+
+* Level description and elements
+
+The level must be defined as a rectagle, but it must be possible to create the level in any way the designer want. The level is made up of tiles that have the following types:
+
+- Space. Empty space where the player, NPCs and lava can go. If the tile above is a rock it will fall to the tile position.
+- Earth. Only the player and lava can go to this tile, but when the player is there, the tile is coverted into a space tile.
+- Rock. Nothing can go to this tile. The rock can be pushed by the player from the left or right if there's a space tile besides it. If there's space in the tile below the rock it will continue falling.
+- Diamond. Only the player can pick it up, thus creating space at the position. It will fall in the same way as a rock and will everything but the player.
+- Wall. No one can go to this tile, only if a NPC is killed next to it, thus turning it into a diamond.
+- Titanium Wall. Permanent tile on the level, can't be changed in any way.
+- Magic Wall. Can turn rocks into diamonds. Only works once and in a short time period. If a rock falls onto the magic wall and there's space below, it will come out at the other side of the wall as a diamond.
+- Exit. The place the player must go to in order to finish the level.
+
+
+* Player and NPCs
+
+The player controls a ant-like character who must collects diamonds to complete the level. He dies if he is touched by a NPC (butterfly or firefly) or gets a rock/diamond in the head.
+He can dig tunnels in the earth and pick up diamonds. It is possible to dig (or pick up diamond) in the adjacent tile if SHIFT if held down while moving in any direction. The player can also move/push rocks left or right if only there's a space "behind" the rock.
+
+There's two types of NPCs, the butterfly and the firefly. There's no big difference but their movement pattern. The butterfly will traverse the game world clockwise and the firefly will do it counter-clockwise. 
