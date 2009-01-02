@@ -25,7 +25,7 @@ namespace XNADash
         private KeyboardState currentKeyboardState;
         private Level.Level currentLevel;
         private Vector2 displaySize;
-        private Sprite fireflySprite;
+        private EnemySprite fireflySprite;
         public SpriteFont font;
         private bool playerIsDead;
         private MovingSprite playerSprite;
@@ -34,20 +34,11 @@ namespace XNADash
         public bool visibilityChanged;
         private HUD gameHUD;
         private int score;
-        private DateTime levelTime;
         private Vector2 HUDPosition;
 
         public Level.Level CurrentLevel
         {
             get { return currentLevel; }
-        }
-
-        /// <summary>
-        /// The time passed since the level started
-        /// </summary>
-        public DateTime LevelTime
-        {
-            get { return levelTime; }
         }
 
         /// <summary>
@@ -68,7 +59,6 @@ namespace XNADash
             graphics.PreferredBackBufferHeight = 768;
 
             Content.RootDirectory = "Content";
-            levelTime = DateTime.Now;
             score = 0;
             HUDPosition = new Vector2(0, graphics.PreferredBackBufferHeight - 20);
 
@@ -110,11 +100,11 @@ namespace XNADash
             sceneGraph = new SceneGraph(this, spriteBatch);
 
             // Set up player sprite
-            playerSprite = new MovingSprite(this, Content.Load<Texture2D>("player"), CurrentLevel.StartPosition);
+            playerSprite = new MovingSprite(this, Content.Load<Texture2D>("player2"), CurrentLevel.StartPosition);
             // Set up butterfly sprite animation
             butterflySprite = new EnemySprite(this, Content.Load<Texture2D>("butterfly"), new Vector2(2100, 900));
             // Set up butterfly sprite animation
-            fireflySprite = new Sprite(this, Content.Load<Texture2D>("firefly"), new Vector2(300, 400));
+            fireflySprite = new EnemySprite(this, Content.Load<Texture2D>("firefly"), new Vector2(2000, 900));
 
             // Set Up a 2D Camera
             camera = new Camera2D(spriteBatch);
@@ -151,14 +141,21 @@ namespace XNADash
             HandleInput(gameTime);
 
             playerSprite.Move(gameTime);
-            // Are we moving yet?
+            // Check if we are moving or need to find a new place to go to
             if (!butterflySprite.currentMovement.IsMoving())
                 butterflySprite.NextMove();
-            butterflySprite.Move(gameTime);
 
+            if (!fireflySprite.currentMovement.IsMoving())
+                fireflySprite.NextMove();
+
+            butterflySprite.Move(gameTime);
+            fireflySprite.Move(gameTime);
+
+            // Check if player touches an enemy
             if (playerSprite.CollidesWith(butterflySprite) || playerSprite.CollidesWith(fireflySprite))
                 playerIsDead = true;
 
+            // Check the tiles the player touches
             List<Tile> tileToCheck = CurrentLevel.GetTiles(playerSprite.bounds);
             foreach (Tile tile in tileToCheck)
             {
@@ -169,12 +166,13 @@ namespace XNADash
                 }
             }
 
-            //tileToCheck = CurrentLevel.GetTiles(butterflySprite.bounds);
-            //foreach (Tile tile in tileToCheck)
-            //{
-            //    if (tile != null && butterflySprite.CollidesWith(tile))
-            //        collisionDebugString = "Butterfly collides with tile " + tile.Position + " " + tile.TileType;
-            //}
+            // Check the tiles the butterfly touches
+            tileToCheck = CurrentLevel.GetTiles(butterflySprite.bounds);
+            foreach (Tile tile in tileToCheck)
+            {
+                if (tile != null && butterflySprite.CollidesWith(tile))
+                    collisionDebugString += " Butterfly collides with tile " + tile.Position + " " + tile.TileType;
+            }
 
             // Make camera follow player
             int movement = (int) (playerSprite.Speed*(float) gameTime.ElapsedGameTime.TotalMilliseconds/1000);
@@ -182,7 +180,7 @@ namespace XNADash
             camera.CenterAt(playerSprite.CenterPosition);
 
             // Update the HUD
-            gameHUD.Update(Score.ToString(), LevelTime.ToShortTimeString(), "0");
+            gameHUD.Update(Score.ToString(), "0");
 
             base.Update(gameTime);
         }
@@ -213,17 +211,14 @@ namespace XNADash
 
             // Write debug info
             sceneGraph.AddText("Player position: " + playerSprite.Position + " Player destination: " + playerSprite.Destination);
-            sceneGraph.AddText("Butterfly position: " + butterflySprite.Position + " Butterfly destination: " + butterflySprite.Destination);
-            sceneGraph.AddText("Cam position:" + camera.Position);
             sceneGraph.AddText("Tile position:" + CurrentLevel.ToTileCoordinate(playerSprite.Position));
             sceneGraph.AddText("Player is dead:" + playerIsDead);
+            sceneGraph.AddText("Player keypress: " + playerSprite.currentMovement.XDirection + " " + playerSprite.currentMovement.YDirection);
+            sceneGraph.AddText("Butterfly position: " + butterflySprite.Position + " Butterfly destination: " + butterflySprite.Destination);
             sceneGraph.AddText(collisionDebugString);
-            sceneGraph.AddText("Player keypress: " + playerSprite.currentMovement.XDirection + " " +
-                               playerSprite.currentMovement.YDirection);
-
+            sceneGraph.AddText("Cam position:" + camera.Position);
+            
             sceneGraph.Draw();
-
-            //playerSprite.MoveStandStill();
 
             gameHUD.Draw(font, HUDPosition);
 

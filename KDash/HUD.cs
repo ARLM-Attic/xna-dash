@@ -40,9 +40,8 @@ namespace XNADash
         /// Updates the HUD with the current game state
         /// </summary>
         /// <param name="currentScore">The players score</param>
-        /// <param name="currentTime">How much time has gone</param>
         /// <param name="currentTimeLeft">How much time is left to complete</param>
-        public void Update(string currentScore, string currentTime, string currentTimeLeft)
+        public void Update(string currentScore, string currentTimeLeft)
         {
             HUDString = Score + currentScore + TimeLeft + LevelTimer;
         }
