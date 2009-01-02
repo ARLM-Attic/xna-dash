@@ -128,6 +128,8 @@ namespace XNADash
 
             // Set up the game HUD
             gameHUD = new HUD(spriteBatch);
+            gameHUD.LevelTimer.SetTimer(CurrentLevel.FinishTime);
+            gameHUD.LevelTimer.Start();
         }
 
         /// <summary>

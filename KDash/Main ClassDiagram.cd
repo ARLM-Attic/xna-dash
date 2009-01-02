@@ -1,20 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="KDash.XNADash">
-    <Position X="6" Y="7.5" Width="1.5" />
+  <Class Name="XNADash.XNADash" Collapsed="true">
+    <Position X="3.75" Y="6.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AIYAEEGAAgAIAwIAQAFAAEUAAAAEAAiABAAAAAAAEAQ=</HashCode>
+      <HashCode>AIYAEEGAAggCAwoAAAFIAEUAAAAEAAiABABAAAAAUAQ=</HashCode>
       <FileName>XNADash.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Field Name="camera" />
       <Field Name="sceneGraph" />
+      <Field Name="gameHUD" />
+      <Field Name="playerSprite" />
+      <Field Name="currentLevel" />
     </ShowAsAssociation>
   </Class>
-  <Class Name="KDash.Level.Level">
-    <Position X="3" Y="1.25" Width="1.5" />
+  <Class Name="XNADash.Level.Level" Collapsed="true">
+    <Position X="3.75" Y="4.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>gRAAAAACBIAkBgYAQAEGIEIHBGACAAAMAEBAQABEAEA=</HashCode>
+      <HashCode>ARAAABACFIAkBhYAQAEGIEIGBGACACAMEEBAQABEAEA=</HashCode>
       <FileName>Level\Level.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -24,8 +27,8 @@
       <Field Name="tileGrid" />
     </ShowAsCollectionAssociation>
   </Class>
-  <Class Name="KDash.Level.Tile">
-    <Position X="6" Y="0.75" Width="1.5" />
+  <Class Name="XNADash.Level.Tile" Collapsed="true">
+    <Position X="3.75" Y="2.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAABAIBIgAAAAgAAAAAEAAAAAAAAAAAAIAAAAAAAA=</HashCode>
       <FileName>Level\Tile.cs</FileName>
@@ -34,29 +37,29 @@
       <Field Name="TileType" />
     </ShowAsAssociation>
   </Class>
-  <Class Name="KDash.Level.TileFactory">
-    <Position X="6" Y="4.25" Width="1.5" />
+  <Class Name="XNADash.Level.TileFactory" Collapsed="true">
+    <Position X="6.75" Y="3.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAABEAAAAAAABAAAAAAAA=</HashCode>
       <FileName>Level\TileFactory.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="KDash.Animation.Camera2D">
-    <Position X="3" Y="10" Width="1.5" />
+  <Class Name="XNADash.Animation.Camera2D" Collapsed="true">
+    <Position X="6.75" Y="9.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>ACABAgAAAAAgACAhAAAAAAABBhAAAAAABAAEIAAAAAA=</HashCode>
       <FileName>Animation\Camera2D.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="KDash.Animation.Scene2DNode">
-    <Position X="12" Y="8.75" Width="1.5" />
+  <Class Name="XNADash.Animation.Scene2DNode" Collapsed="true">
+    <Position X="0.75" Y="8.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAgAgAAAAAAAAAAAAAgAAAAAAAAAAAAA=</HashCode>
       <FileName>Animation\Scene2DNode.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="XNADash.Animation.SceneGraph">
-    <Position X="9" Y="8.75" Width="1.5" />
+  <Class Name="XNADash.Animation.SceneGraph" Collapsed="true">
+    <Position X="0.75" Y="7.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAACAAAEgABAAAAAAAAAIAAAABIAAAAAAEAAAA=</HashCode>
       <FileName>Animation\SceneGraph.cs</FileName>
@@ -65,30 +68,47 @@
       <Field Name="currentSceneList" />
     </ShowAsCollectionAssociation>
   </Class>
-  <Class Name="KDash.Sprites.Sprite">
-    <Position X="0.5" Y="0.5" Width="1.5" />
+  <Class Name="XNADash.Sprites.Sprite" Collapsed="true">
+    <Position X="6.75" Y="5.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAACAAAgAgABAABAAAABAAAgCABAACAABAAIA=</HashCode>
       <FileName>Sprites\Sprite.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="KDash.Sprites.EnemySprite">
-    <Position X="0.5" Y="9.75" Width="1.5" />
+  <Class Name="XNADash.Sprites.EnemySprite" Collapsed="true">
+    <Position X="6.75" Y="8.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AEAIAADAAAAAAAAAAAACBAAAAAAAAAAgBAAAQAAAAAA=</HashCode>
+      <HashCode>AAAJAADAAAAAAAAAAAAABAAAAAAAAAAgBAAAQAAAAAA=</HashCode>
       <FileName>Sprites\EnemySprite.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="KDash.Sprites.MovingSprite">
-    <Position X="0.5" Y="5.25" Width="1.5" />
+  <Class Name="XNADash.Sprites.MovingSprite" Collapsed="true">
+    <Position X="6.75" Y="6.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAEAAAAAAIAAAAAAIAAARAABAAAAAAQIRAAAAAAAQAA=</HashCode>
+      <HashCode>AAEAAAAAAIAAAAAAAAAARAABAAAAAAQMRAAAAAAAQAA=</HashCode>
       <FileName>Sprites\MovingSprite.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Enum Name="KDash.Level.TileTypeEnum">
-    <Position X="9" Y="0.5" Width="1.5" />
+  <Class Name="XNADash.HUD" Collapsed="true">
+    <Position X="3.75" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAggAAAAAAAAAAAAABAAAAAIAAAEAAQA=</HashCode>
+      <FileName>HUD.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="timer" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="XNADash.Level.CountDownTimer" Collapsed="true">
+    <Position X="3.75" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAACAAAAAEAAAAAAAAAAAAAAAAIAAAAAAABAA=</HashCode>
+      <FileName>Level\CountDownTimer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="XNADash.Level.TileTypeEnum" Collapsed="true">
+    <Position X="3.75" Y="1.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAIBACAAAAAAAAAAAEAAAAAgAAAAAgQAIAAAAAAAAAA=</HashCode>
       <FileName>Level\TileTypeEnum.cs</FileName>

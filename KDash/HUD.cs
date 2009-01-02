@@ -1,6 +1,7 @@
 ﻿
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using XNADash.Level;
 
 namespace XNADash
 {
@@ -12,10 +13,10 @@ namespace XNADash
     class HUD
     {
         public string Score;
-        public string Time;
         public string TimeLeft;
         private readonly SpriteBatch batch;
         private string HUDString;
+        private readonly CountDownTimer timer;
 
         /// <summary>
         /// Constructor to initialize the HUD
@@ -25,9 +26,14 @@ namespace XNADash
         {
             batch = sb;
             Score = "Score ";
-            Time = " Time ";
             TimeLeft = " Time left ";
             HUDString = "";
+            timer = new CountDownTimer();
+        }
+
+        public CountDownTimer LevelTimer
+        {
+            get { return timer; }
         }
 
         /// <summary>
@@ -38,7 +44,7 @@ namespace XNADash
         /// <param name="currentTimeLeft">How much time is left to complete</param>
         public void Update(string currentScore, string currentTime, string currentTimeLeft)
         {
-            HUDString = Score + currentScore + Time + currentTime + TimeLeft + currentTimeLeft;
+            HUDString = Score + currentScore + TimeLeft + LevelTimer;
         }
 
         /// <summary>
