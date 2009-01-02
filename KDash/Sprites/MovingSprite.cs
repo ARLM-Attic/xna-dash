@@ -158,18 +158,29 @@ namespace XNADash.Sprites
                 // This is done by getting the tile position and calculate
                 // where the player should be relative to it.
                 if (currentMovement.XDirection == MovementVector.DirectionX.Left)
+                {
                     Position.X = tile.Position.X + tile.Width;
+                    MoveStandStill();
+                }
                 if (currentMovement.XDirection == MovementVector.DirectionX.Right)
+                {
                     Position.X = tile.Position.X - tile.Width;
+                    MoveStandStill();
+                }
                 if (currentMovement.YDirection == MovementVector.DirectionY.Up)
+                {
                     Position.Y = tile.Position.Y + tile.Height;
+                    MoveStandStill();
+                }
                 if (currentMovement.YDirection == MovementVector.DirectionY.Down)
+                {
                     Position.Y = tile.Position.Y - tile.Height;
+                    MoveStandStill();
+                }
             }
 
             if (tile.TileType == TileTypeEnum.Diamond)
             {
-                //TODO: Implement better way of handling tile convertion
                 tile.TileType = TileTypeEnum.Space;
                 tile.Texture = gameInstance.Content.Load<Texture2D>("space");
                 gameInstance.DiamondCollected();
@@ -177,9 +188,14 @@ namespace XNADash.Sprites
 
             if (tile.TileType == TileTypeEnum.Earth)
             {
-                //TODO: Implement better way of handling tile convertion
                 tile.TileType = TileTypeEnum.Space;
                 tile.Texture = gameInstance.Content.Load<Texture2D>("space");
+            }
+
+            if (tile.TileType == TileTypeEnum.Exit)
+            {
+                if (gameInstance.CurrentLevel.DiamondsToCollect < gameInstance.Score)
+                    gameInstance.Exit();
             }
         }
     }

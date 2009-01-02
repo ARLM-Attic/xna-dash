@@ -2,8 +2,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Timers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -89,7 +87,7 @@ namespace XNADash
             OnGraphicsComponentDeviceReset(this, new EventArgs());
 
             // Add Frame per second counter
-            Components.Add(new FrameRateCounter(this, new Vector2(300, 0)));
+            Components.Add(new FrameRateCounter(this, new Vector2(800, 0)));
             base.Initialize();
         }
 
@@ -110,22 +108,23 @@ namespace XNADash
             spriteBatch = new SpriteBatch(GraphicsDevice);
             // Prepare scene
             sceneGraph = new SceneGraph(this, spriteBatch);
-            // Set Up a 2D Camera
-            camera = new Camera2D(spriteBatch);
-
-            // Start in the middle of the level
-            camera.Position = new Vector2(2100, 1000);
-            camera.worldWidth = CurrentLevel.WorldWidth;
-            camera.worldHeight = CurrentLevel.WorldHeight;
-            camera.HasMoved = true;
-            visibilityChanged = true;
 
             // Set up player sprite
-            playerSprite = new MovingSprite(this, Content.Load<Texture2D>("player"), new Vector2(2100, 1000));
+            playerSprite = new MovingSprite(this, Content.Load<Texture2D>("player"), CurrentLevel.StartPosition);
             // Set up butterfly sprite animation
             butterflySprite = new EnemySprite(this, Content.Load<Texture2D>("butterfly"), new Vector2(2100, 900));
             // Set up butterfly sprite animation
             fireflySprite = new Sprite(this, Content.Load<Texture2D>("firefly"), new Vector2(300, 400));
+
+            // Set Up a 2D Camera
+            camera = new Camera2D(spriteBatch);
+
+            // Start in the middle of the level
+            camera.Position = playerSprite.Position;
+            camera.worldWidth = CurrentLevel.WorldWidth;
+            camera.worldHeight = CurrentLevel.WorldHeight;
+            camera.HasMoved = true;
+            visibilityChanged = true;
 
             // Set up the game HUD
             gameHUD = new HUD(spriteBatch);
@@ -150,7 +149,9 @@ namespace XNADash
             HandleInput(gameTime);
 
             playerSprite.Move(gameTime);
-            butterflySprite.NextMove();
+            // Are we moving yet?
+            if (!butterflySprite.currentMovement.IsMoving())
+                butterflySprite.NextMove();
             butterflySprite.Move(gameTime);
 
             if (playerSprite.CollidesWith(butterflySprite) || playerSprite.CollidesWith(fireflySprite))
@@ -200,7 +201,7 @@ namespace XNADash
             CurrentLevel.ResetCollisionDebugInfo();
 
             // Draw the background
-            CurrentLevel.Draw(sceneGraph, spriteBatch, 0, Color.White);
+            CurrentLevel.Draw(sceneGraph, spriteBatch, 0, Color.Black);
             // Draw the player
             playerSprite.Draw(sceneGraph, spriteBatch);
             // Draw the firefly
@@ -209,8 +210,8 @@ namespace XNADash
             butterflySprite.Draw(sceneGraph, spriteBatch);
 
             // Write debug info
-            sceneGraph.AddText("Player position: " + playerSprite.Position);
-            sceneGraph.AddText("Player destination: " + playerSprite.Destination);
+            sceneGraph.AddText("Player position: " + playerSprite.Position + " Player destination: " + playerSprite.Destination);
+            sceneGraph.AddText("Butterfly position: " + butterflySprite.Position + " Butterfly destination: " + butterflySprite.Destination);
             sceneGraph.AddText("Cam position:" + camera.Position);
             sceneGraph.AddText("Tile position:" + CurrentLevel.ToTileCoordinate(playerSprite.Position));
             sceneGraph.AddText("Player is dead:" + playerIsDead);
@@ -245,8 +246,7 @@ namespace XNADash
                 if (playerSprite.currentMovement.IsMoving() == false)
                 {
                     playerSprite.Destination = playerSprite.Position;
-                    playerSprite.Destination.X -= 100;
-                    playerSprite.Destination.X -= playerSprite.currentMovement.HorizontalVelocity;
+                    playerSprite.Destination.X -= CurrentLevel.CellWidth;
                     playerSprite.MoveLeft();
                     return;
                 }
@@ -256,7 +256,7 @@ namespace XNADash
                 if (playerSprite.currentMovement.IsMoving() == false)
                 {
                     playerSprite.Destination = playerSprite.Position;
-                    playerSprite.Destination.X += 100;
+                    playerSprite.Destination.X += CurrentLevel.CellWidth;
                     playerSprite.MoveRight();
                     return;
                 }
@@ -266,7 +266,7 @@ namespace XNADash
                 if (playerSprite.currentMovement.IsMoving() == false)
                 {
                     playerSprite.Destination = playerSprite.Position;
-                    playerSprite.Destination.Y -= 100;
+                    playerSprite.Destination.Y -= CurrentLevel.CellHeight;
                     playerSprite.MoveUp();
                     return;
                 }
@@ -276,7 +276,7 @@ namespace XNADash
                 if (playerSprite.currentMovement.IsMoving() == false)
                 {
                     playerSprite.Destination = playerSprite.Position;
-                    playerSprite.Destination.Y += 100;
+                    playerSprite.Destination.Y += CurrentLevel.CellHeight;
                     playerSprite.MoveDown();
                     return;
                 }

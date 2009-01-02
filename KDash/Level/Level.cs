@@ -26,6 +26,7 @@ namespace XNADash.Level
         private int width;
         public int WorldHeight;
         public int WorldWidth;
+        private Vector2 startPosition;
 
         /// <summary>
         /// Constructor of the level
@@ -93,6 +94,14 @@ namespace XNADash.Level
         public int CellWidth
         {
             get { return cellWidth; }
+        }
+
+        /// <summary>
+        /// The position (in tile coordinates) where the player should start
+        /// </summary>
+        public Vector2 StartPosition
+        {
+            get { return startPosition; }
         }
 
         /// <summary>
@@ -172,12 +181,12 @@ namespace XNADash.Level
                         SetNumberOfDiamondToCollect(line);
                     else if (line.StartsWith("time"))
                         SetTime(line);
-                    else if (line.StartsWith("start"))
-                        SetLevelName(line);
                     else if (line.StartsWith("height"))
                         SetLevelHeight(line);
                     else if (line.StartsWith("width"))
                         SetLevelWidth(line);
+                    else if (line.StartsWith("start"))
+                        SetStartPosition(line);
                     else
                     {
                         ParseLevelDefinition(line, currentHeight++);
@@ -196,6 +205,22 @@ namespace XNADash.Level
 
             WorldWidth = cellWidth*width;
             WorldHeight = cellHeight*height;
+        }
+
+        /// <summary>
+        /// Sets the players startposition on the level
+        /// </summary>
+        /// <param name="line">The level definition</param>
+        private void SetStartPosition(string line)
+        {
+            if (string.IsNullOrEmpty(line))
+                throw new Exception("Level player start position could not be set, level input was " + line);
+
+            line = line.Replace("start=", "");
+            string[] tempString = line.Split(',');
+            float xTileCoordinate = (float)Convert.ToDecimal(tempString[0]) * 100;
+            float yTileCoordinate = (float)Convert.ToDecimal(tempString[1]) * 100;
+            startPosition = new Vector2(xTileCoordinate, yTileCoordinate);
         }
 
         /// <summary>
