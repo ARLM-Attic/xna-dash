@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using XNADash.Animation;
 using XNADash.Level;
+using XNADash.SoundFx;
 using XNADash.Sprites;
 
 #endregion
@@ -35,6 +36,9 @@ namespace XNADash
         private HUD gameHUD;
         private int score;
         private Vector2 HUDPosition;
+        private SoundFxManager fxManager;
+
+
 
         public Level.Level CurrentLevel
         {
@@ -47,6 +51,11 @@ namespace XNADash
         public int Score
         {
             get { return score; }
+        }
+
+        public SoundFxManager FxManager
+        {
+            get { return fxManager; }
         }
 
         /// <summary>
@@ -78,6 +87,9 @@ namespace XNADash
 
             // Add Frame per second counter
             Components.Add(new FrameRateCounter(this, new Vector2(800, 0)));
+            // Initialize sound effects
+            fxManager = new SoundFxManager();
+
             base.Initialize();
         }
 
@@ -120,6 +132,8 @@ namespace XNADash
             gameHUD = new HUD(spriteBatch);
             gameHUD.LevelTimer.SetTimer(CurrentLevel.FinishTime);
             gameHUD.LevelTimer.Start();
+
+            FxManager.PlaySound(SoundFxManager.CueEnums.start);
         }
 
         /// <summary>

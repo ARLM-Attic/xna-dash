@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using XNADash.Collision;
 using XNADash.Level;
+using XNADash.SoundFx;
 
 #endregion
 
@@ -177,6 +178,8 @@ namespace XNADash.Sprites
                     Position.Y = tile.Position.Y - tile.Height;
                     MoveStandStill();
                 }
+
+                gameInstance.FxManager.PlaySound(SoundFxManager.CueEnums.bump);
             }
 
             if (tile.TileType == TileTypeEnum.Diamond)
@@ -184,18 +187,23 @@ namespace XNADash.Sprites
                 tile.TileType = TileTypeEnum.Space;
                 tile.Texture = gameInstance.Content.Load<Texture2D>("space");
                 gameInstance.DiamondCollected();
+                gameInstance.FxManager.PlaySound(SoundFxManager.CueEnums.diamond);
             }
 
             if (tile.TileType == TileTypeEnum.Earth)
             {
                 tile.TileType = TileTypeEnum.Space;
                 tile.Texture = gameInstance.Content.Load<Texture2D>("space");
+                gameInstance.FxManager.PlaySound(SoundFxManager.CueEnums.move);
             }
 
             if (tile.TileType == TileTypeEnum.Exit)
             {
                 if (gameInstance.CurrentLevel.DiamondsToCollect < gameInstance.Score)
+                {
+                    gameInstance.FxManager.PlaySound(SoundFxManager.CueEnums.applause);
                     gameInstance.Exit();
+                }
             }
         }
     }
