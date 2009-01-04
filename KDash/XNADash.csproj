@@ -79,6 +79,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Animation\Camera2D.cs" />
+    <Compile Include="Animation\GraphicsResourceManager.cs" />
     <Compile Include="Animation\SceneGraph.cs" />
     <Compile Include="Collision\CollisionUtility.cs" />
     <Compile Include="Animation\Scene2DNode.cs" />
@@ -87,6 +88,7 @@
     <Compile Include="HUD.cs" />
     <Compile Include="Level\CountDownTimer.cs" />
     <Compile Include="Level\Level.cs" />
+    <Compile Include="NPCContainer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="SoundFx\SoundFxManager.cs" />

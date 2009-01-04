@@ -22,6 +22,11 @@ namespace XNADash.Sprites
         public Vector2 Position;
         public Texture2D texture;
 
+        public Sprite()
+        {
+            
+        }
+
         /// <summary>
         /// Initializes the sprite
         /// </summary>
@@ -34,6 +39,7 @@ namespace XNADash.Sprites
             texture = Tex;
             Position = position;
             color = Color.White;
+            CalculateBounds();
         }
 
         public Vector2 CenterPosition
@@ -52,12 +58,10 @@ namespace XNADash.Sprites
         /// <summary>
         /// Adds the sprite to the <see cref="SceneGraph"/> object for rendering
         /// </summary>
-        /// <param name="scene">The scene graph reference</param>
         /// <param name="batch">The sprite batch reference</param>
-        public void Draw(SceneGraph scene, SpriteBatch batch)
+        public void Draw(SpriteBatch batch)
         {
-            Scene2DNode spriteNode = new Scene2DNode(texture, Position);
-            scene.AddToScene(spriteNode);
+            batch.Draw(texture, Position, Color.Black);
         }
 
         /// <summary>
@@ -152,6 +156,13 @@ namespace XNADash.Sprites
         public void CalculateBounds()
         {
             bounds = new Rectangle((int) Position.X, (int) Position.Y, texture.Width, texture.Height);
+        }
+
+        public Scene2DNode ToSceneGraphNode()
+        {
+            Scene2DNode returnValue = new Scene2DNode(texture, Position);
+
+            return returnValue;
         }
     }
 }

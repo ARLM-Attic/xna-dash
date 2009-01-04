@@ -6,9 +6,10 @@ namespace XNADash.SoundFx
 {
     public class SoundFxManager
     {
-        AudioEngine engine;
-        SoundBank soundBank;
+        readonly AudioEngine engine;
+        readonly SoundBank soundBank;
         WaveBank waveBank;
+        private static SoundFxManager instance;
 
         public enum CueEnums
         {
@@ -21,13 +22,29 @@ namespace XNADash.SoundFx
             start
         }
 
-        public SoundFxManager()
+        private SoundFxManager()
         {
             // Initialize audio objects.
             engine = new AudioEngine("Content\\Audio\\XNADash_sound.xgs");
             soundBank = new SoundBank(engine, "Content\\Audio\\XNADash.xsb");
             waveBank = new WaveBank(engine, "Content\\Audio\\XNADash.xwb");
         }
+
+        /// <summary>
+        /// Gets the instance of the sound effect manager.
+        /// This should be used because the class is implented as a singleton
+        /// </summary>
+        public static SoundFxManager Instance
+        {
+            get
+            {
+                if (instance == null)
+                    instance = new SoundFxManager();
+
+                return instance;
+            }
+        }
+
 
         public void PlaySound(CueEnums cue)
         {

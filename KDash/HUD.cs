@@ -40,8 +40,7 @@ namespace XNADash
         /// Updates the HUD with the current game state
         /// </summary>
         /// <param name="currentScore">The players score</param>
-        /// <param name="currentTimeLeft">How much time is left to complete</param>
-        public void Update(string currentScore, string currentTimeLeft)
+        public void Update(string currentScore)
         {
             HUDString = Score + currentScore + TimeLeft + LevelTimer;
         }
@@ -53,9 +52,7 @@ namespace XNADash
         /// <param name="position">The screen posision to draw at</param>
         public void Draw(SpriteFont font, Vector2 position)
         {
-            batch.Begin(SpriteBlendMode.AlphaBlend, SpriteSortMode.Deferred, SaveStateMode.SaveState);
             batch.DrawString(font, HUDString, position, Color.Turquoise);
-            batch.End();
         }
     }
 }

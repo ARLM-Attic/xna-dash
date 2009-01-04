@@ -20,6 +20,10 @@ namespace XNADash.Sprites
         private GameTime spriteTime = new GameTime();
         public Vector2 Destination;
 
+        public MovingSprite()
+        {
+            
+        }
         /// <summary>
         /// Constructor to create the sprite
         /// </summary>
@@ -125,6 +129,8 @@ namespace XNADash.Sprites
                 Position.Y = Destination.Y;
                 MoveStandStill();
             }
+
+            CalculateBounds();
         }
 
         /// <summary>
@@ -138,73 +144,11 @@ namespace XNADash.Sprites
 
             if (CollisionUtility.Intersects(bounds, tile.GetBounds()))
             {
-                ResolveCollision(tile);
+                CollisionUtility.ResolvePlayerTileCollision(this, tile);
                 result = true;
             }
 
             return result;
-        }
-
-        /// <summary>
-        /// Detetmines the outcome of the sprite collision with a tile.
-        /// </summary>
-        /// <param name="tile">The tile to check</param>
-        public virtual void ResolveCollision(Tile tile)
-        {
-            if (tile.TileType == TileTypeEnum.MagicWall || tile.TileType == TileTypeEnum.Rock ||
-                tile.TileType == TileTypeEnum.TitaniumWall || tile.TileType == TileTypeEnum.Wall)
-            {
-                // If we collide with a tile we should be "pushed back" to 
-                // a place as close as possible to the tile.
-                // This is done by getting the tile position and calculate
-                // where the player should be relative to it.
-                if (currentMovement.XDirection == MovementVector.DirectionX.Left)
-                {
-                    Position.X = tile.Position.X + tile.Width;
-                    MoveStandStill();
-                }
-                if (currentMovement.XDirection == MovementVector.DirectionX.Right)
-                {
-                    Position.X = tile.Position.X - tile.Width;
-                    MoveStandStill();
-                }
-                if (currentMovement.YDirection == MovementVector.DirectionY.Up)
-                {
-                    Position.Y = tile.Position.Y + tile.Height;
-                    MoveStandStill();
-                }
-                if (currentMovement.YDirection == MovementVector.DirectionY.Down)
-                {
-                    Position.Y = tile.Position.Y - tile.Height;
-                    MoveStandStill();
-                }
-
-                gameInstance.FxManager.PlaySound(SoundFxManager.CueEnums.bump);
-            }
-
-            if (tile.TileType == TileTypeEnum.Diamond)
-            {
-                tile.TileType = TileTypeEnum.Space;
-                tile.Texture = gameInstance.Content.Load<Texture2D>("space");
-                gameInstance.DiamondCollected();
-                gameInstance.FxManager.PlaySound(SoundFxManager.CueEnums.diamond);
-            }
-
-            if (tile.TileType == TileTypeEnum.Earth)
-            {
-                tile.TileType = TileTypeEnum.Space;
-                tile.Texture = gameInstance.Content.Load<Texture2D>("space");
-                gameInstance.FxManager.PlaySound(SoundFxManager.CueEnums.move);
-            }
-
-            if (tile.TileType == TileTypeEnum.Exit)
-            {
-                if (gameInstance.CurrentLevel.DiamondsToCollect < gameInstance.Score)
-                {
-                    gameInstance.FxManager.PlaySound(SoundFxManager.CueEnums.applause);
-                    gameInstance.Exit();
-                }
-            }
         }
     }
 }

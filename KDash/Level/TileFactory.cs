@@ -1,7 +1,10 @@
 ﻿#region
 
 using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using XNADash.Animation;
+using XNADash.Sprites;
 
 #endregion
 
@@ -36,6 +39,8 @@ namespace XNADash.Level
         /// M = Magic wall<br/>
         /// T = Titanium wall<br/>
         /// W = Wall<br/>
+        /// B = Butterfly (space)<br/>
+        /// F = Firefly (space)<br/>
         /// </summary>
         /// <param name="tileId">R = Rock, D = Diamond, E = Dirt, S = Empty Space, X = Exit, M = Magic wall, T = Titanium wall, W = Wall</param>
         /// <returns>The specified tile</returns>
@@ -69,6 +74,12 @@ namespace XNADash.Level
                 case 'W':
                     result.TileType = TileTypeEnum.Wall;
                     break;
+                case 'B':
+                    result.TileType = TileTypeEnum.Space;
+                    break;
+                case 'F':
+                    result.TileType = TileTypeEnum.Space;
+                    break;
                 default:
                     throw new Exception("Unknown tile type, can not build tile of type '" + tileId + "'");
             }
@@ -87,28 +98,28 @@ namespace XNADash.Level
             switch (tile.TileType)
             {
                 case TileTypeEnum.Rock:
-                    tile.Texture = gameInstance.Content.Load<Texture2D>("rock");
+                    tile.Texture = GraphicsResourceManager.Instance.LoadTexture(GraphicsResourceManager.GraphicsEnum.Rock);
                     break;
                 case TileTypeEnum.Diamond:
-                    tile.Texture = gameInstance.Content.Load<Texture2D>("diamond");
+                    tile.Texture = GraphicsResourceManager.Instance.LoadTexture(GraphicsResourceManager.GraphicsEnum.Diamond);
                     break;
                 case TileTypeEnum.Earth:
-                    tile.Texture = gameInstance.Content.Load<Texture2D>("dirt");
+                    tile.Texture = GraphicsResourceManager.Instance.LoadTexture(GraphicsResourceManager.GraphicsEnum.Dirt);
                     break;
                 case TileTypeEnum.Space:
-                    tile.Texture = gameInstance.Content.Load<Texture2D>("space");
+                    tile.Texture = GraphicsResourceManager.Instance.LoadTexture(GraphicsResourceManager.GraphicsEnum.Space);
                     break;
                 case TileTypeEnum.Exit:
-                    tile.Texture = gameInstance.Content.Load<Texture2D>("exit");
+                    tile.Texture = GraphicsResourceManager.Instance.LoadTexture(GraphicsResourceManager.GraphicsEnum.Exit);
                     break;
                 case TileTypeEnum.MagicWall:
-                    tile.Texture = gameInstance.Content.Load<Texture2D>("magicwall");
+                    tile.Texture = GraphicsResourceManager.Instance.LoadTexture(GraphicsResourceManager.GraphicsEnum.MagicWall);
                     break;
                 case TileTypeEnum.TitaniumWall:
-                    tile.Texture = gameInstance.Content.Load<Texture2D>("titanium");
+                    tile.Texture = GraphicsResourceManager.Instance.LoadTexture(GraphicsResourceManager.GraphicsEnum.Titanium);
                     break;
                 case TileTypeEnum.Wall:
-                    tile.Texture = gameInstance.Content.Load<Texture2D>("wall");
+                    tile.Texture = GraphicsResourceManager.Instance.LoadTexture(GraphicsResourceManager.GraphicsEnum.Wall);
                     break;
             }
         }

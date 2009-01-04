@@ -7,6 +7,7 @@ using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using XNADash.Animation;
+using XNADash.Sprites;
 
 #endregion
 
@@ -27,6 +28,7 @@ namespace XNADash.Level
         public int WorldHeight;
         public int WorldWidth;
         private Vector2 startPosition;
+        private NPCContainer npcContainer;
 
         /// <summary>
         /// Constructor of the level
@@ -36,6 +38,7 @@ namespace XNADash.Level
         {
             game = gameInstance;
             factory = new TileFactory(game);
+            npcContainer = new NPCContainer();
         }
 
         /// <summary>
@@ -102,6 +105,11 @@ namespace XNADash.Level
         public Vector2 StartPosition
         {
             get { return startPosition; }
+        }
+
+        public NPCContainer NpcContainer
+        {
+            get { return npcContainer; }
         }
 
         /// <summary>
@@ -287,9 +295,24 @@ namespace XNADash.Level
                     tileGrid[currentWidth, currentHeight] = newTile;
                 }
 
+                if (currentChar.Equals('B') || currentChar.Equals('F'))
+                    AddEnemy(newTile.Position, currentChar);
+
                 // Add another tile to the width 
                 currentWidth++;
             }
+        }
+
+        private void AddEnemy(Vector2 position, char enemyType)
+        {
+            EnemySprite newEnemy;
+
+            if (enemyType.Equals('B'))
+                newEnemy = new EnemySprite(game, EnemySprite.EnemyEnum.Butterfly, position);
+            else
+                newEnemy = new EnemySprite(game, EnemySprite.EnemyEnum.Firefly, position);
+
+            game.CurrentLevel.NpcContainer.AddNPC(newEnemy);
         }
 
         /// <summary>
@@ -344,7 +367,7 @@ namespace XNADash.Level
             return false;
         }
 
-        public void Draw(SceneGraph scene, SpriteBatch batch, float rotationValue, Color layerColor)
+        public void Draw(SceneGraph scene, SpriteBatch batch, Color layerColor)
         {
             List<Scene2DNode> tileNodes = GetVisibleTiles();
             scene.AddToScene(tileNodes);

@@ -76,9 +76,7 @@ namespace XNADash.Animation
         /// </summary>
         public void Draw()
         {
-            batch.Begin(SpriteBlendMode.AlphaBlend, SpriteSortMode.Deferred, SaveStateMode.SaveState);
-
-            // Draw game graphics
+            // AddToScene game graphics
             foreach (Scene2DNode node in currentSceneList)
             {
                 game.camera.DrawNode(node);
@@ -94,8 +92,6 @@ namespace XNADash.Animation
                     yTextOffset += 10;
                 }
             }
-
-            batch.End();
         }
     }
 }

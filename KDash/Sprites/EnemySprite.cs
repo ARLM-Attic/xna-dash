@@ -18,20 +18,40 @@ namespace XNADash.Sprites
         private readonly MovementVector movementVector;
         private Tile[] surroundingTiles;
         private List<Vector2> visitedPositions;
+        public enum EnemyEnum
+        {
+            Butterfly,
+            Firefly
+        }
+
+        private readonly EnemyEnum enemyType;
 
         /// <summary>
         /// Initializes the sprite
         /// </summary>
         /// <param name="game">Reference to the game</param>
-        /// <param name="Tex">The sprite texture</param>
+        /// <param name="enemy">The type enemy</param>
         /// <param name="position">The starting position</param>
-        public EnemySprite(XNADash game, Texture2D Tex, Vector2 position) : base(game, Tex, position)
+        public EnemySprite(XNADash game, EnemyEnum enemy, Vector2 position)
         {
+            enemyType = enemy;
+            if (enemyType == EnemyEnum.Butterfly)
+                texture = game.Content.Load<Texture2D>("butterfly");
+            else if (enemyType == EnemyEnum.Firefly)
+                texture = game.Content.Load<Texture2D>("firefly");
+
             visitedPositions = new List<Vector2>();
             Speed = 500f;
 
             movementVector = new MovementVector();
             MoveStandStill();
+            gameInstance = game;
+            Position = position;
+        }
+
+        public EnemyEnum EnemyType
+        {
+            get { return enemyType; }
         }
 
         #region NPCMovement Members
@@ -95,38 +115,11 @@ namespace XNADash.Sprites
 
             if (CollisionUtility.Intersects(bounds, tile.GetBounds()))
             {
-                ResolveCollision(tile);
+                CollisionUtility.ResolveNPCTileCollision(this, tile);
                 result = true;
             }
 
             return result;
-        }
-
-        public override void ResolveCollision(Tile tile)
-        {
-            if (tile.TileType != TileTypeEnum.Space)
-            {
-                if (currentMovement.XDirection == MovementVector.DirectionX.Left)
-                {
-                    MoveStandStill();
-                    Position.X = tile.Position.X + tile.Width;
-                }
-                if (currentMovement.XDirection == MovementVector.DirectionX.Right)
-                {
-                    MoveStandStill();
-                    Position.X = tile.Position.X - tile.Width;
-                }
-                if (currentMovement.YDirection == MovementVector.DirectionY.Up)
-                {
-                    MoveStandStill();
-                    Position.Y = tile.Position.Y + tile.Height;
-                }
-                if (currentMovement.YDirection == MovementVector.DirectionY.Down)
-                {
-                    MoveStandStill();
-                    Position.Y = tile.Position.Y - tile.Height;
-                }
-            }
         }
 
         private void MarkAsVisited(Vector2 position)

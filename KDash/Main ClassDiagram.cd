@@ -1,34 +1,35 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="XNADash.XNADash" Collapsed="true">
-    <Position X="3.75" Y="6.75" Width="1.5" />
+    <Position X="6.75" Y="5.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AIYAEEGAAggCAwoAAAFIAEUAAAAEAAiABABAAAAAUAQ=</HashCode>
+      <HashCode>AIYAEECAAggCAwoAAABIAEUAAAAEAAiABAAAAAAAEAQ=</HashCode>
       <FileName>XNADash.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Field Name="camera" />
+      <Field Name="currentLevel" />
+      <Field Name="playerSprite" />
       <Field Name="sceneGraph" />
       <Field Name="gameHUD" />
-      <Field Name="playerSprite" />
-      <Field Name="currentLevel" />
     </ShowAsAssociation>
   </Class>
   <Class Name="XNADash.Level.Level" Collapsed="true">
-    <Position X="3.75" Y="4.75" Width="1.5" />
+    <Position X="3.75" Y="5.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>ARAAABACFIAkBhYAQAEGIEIGBGACACAMEEBAQABEAEA=</HashCode>
+      <HashCode>ARAAAFADFIAkBhYAQAEGIEIGBGACACAMEEFAQABEAEA=</HashCode>
       <FileName>Level\Level.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Field Name="factory" />
+      <Property Name="NpcContainer" />
     </ShowAsAssociation>
     <ShowAsCollectionAssociation>
       <Field Name="tileGrid" />
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="XNADash.Level.Tile" Collapsed="true">
-    <Position X="3.75" Y="2.75" Width="1.5" />
+    <Position X="0.75" Y="5.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAABAIBIgAAAAgAAAAAEAAAAAAAAAAAAIAAAAAAAA=</HashCode>
       <FileName>Level\Tile.cs</FileName>
@@ -38,28 +39,28 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="XNADash.Level.TileFactory" Collapsed="true">
-    <Position X="6.75" Y="3.75" Width="1.5" />
+    <Position X="0.75" Y="3.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAABEAAAAAAABAAAAAAAA=</HashCode>
       <FileName>Level\TileFactory.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="XNADash.Animation.Camera2D" Collapsed="true">
-    <Position X="6.75" Y="9.5" Width="1.5" />
+    <Position X="3.75" Y="3.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>ACABAgAAAAAgACAhAAAAAAABBhAAAAAABAAEIAAAAAA=</HashCode>
       <FileName>Animation\Camera2D.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="XNADash.Animation.Scene2DNode" Collapsed="true">
-    <Position X="0.75" Y="8.75" Width="1.5" />
+    <Position X="6.75" Y="9.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAgAgAAAAAAAAAAAAAgAAAAAAAAAAAAA=</HashCode>
       <FileName>Animation\Scene2DNode.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="XNADash.Animation.SceneGraph" Collapsed="true">
-    <Position X="0.75" Y="7.5" Width="1.5" />
+    <Position X="6.75" Y="7.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAACAAAEgABAAAAAAAAAIAAAABIAAAAAAEAAAA=</HashCode>
       <FileName>Animation\SceneGraph.cs</FileName>
@@ -69,31 +70,31 @@
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="XNADash.Sprites.Sprite" Collapsed="true">
-    <Position X="6.75" Y="5.5" Width="1.5" />
+    <Position X="9.75" Y="4" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAACAAAgAgABAABAAAABAAAgCABAACAABAAIA=</HashCode>
+      <HashCode>AAAAAAAAACAAAgAgABAABAAAABAAAgCABAADAABAAIA=</HashCode>
       <FileName>Sprites\Sprite.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="XNADash.Sprites.EnemySprite" Collapsed="true">
-    <Position X="6.75" Y="8.25" Width="1.5" />
+    <Position X="9.75" Y="6.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAJAADAAAAAAAAAAAAABAAAAAAAAAAgBAAAQAAAAAA=</HashCode>
+      <HashCode>AAAJAADAAAAAAABAAAAARAAAAAAAAAAgAAAAQAAAAAA=</HashCode>
       <FileName>Sprites\EnemySprite.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="XNADash.Sprites.MovingSprite" Collapsed="true">
-    <Position X="6.75" Y="6.75" Width="1.5" />
+    <Position X="9.75" Y="5.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAEAAAAAAIAAAAAAAAAARAABAAAAAAQMRAAAAAAAQAA=</HashCode>
+      <HashCode>AAEAAAAAAIAAAAAAAAAARAABAAAAAAQMQAAAAAAAQAA=</HashCode>
       <FileName>Sprites\MovingSprite.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="XNADash.HUD" Collapsed="true">
-    <Position X="3.75" Y="8.75" Width="1.5" />
+    <Position X="6.75" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAQAAAAAAAAAAggAAAAAAAAAAAAABAAAAAIAAAEAAQA=</HashCode>
+      <HashCode>AAQAAAAAAAAAAggAAAAAAAAAAAAABAAAAAIAAAEAABA=</HashCode>
       <FileName>HUD.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -101,14 +102,35 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="XNADash.Level.CountDownTimer" Collapsed="true">
-    <Position X="3.75" Y="10.75" Width="1.5" />
+    <Position X="6.75" Y="1.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAIAAAAACAAAAAEAAAAAAAAAAAAAAAAIAAAAAAABAA=</HashCode>
+      <HashCode>AAAIAAAAACAAAAAEAAAAAAAAAAAAAAAAIAAIAAAAJAA=</HashCode>
       <FileName>Level\CountDownTimer.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="XNADash.NPCContainer" Collapsed="true">
+    <Position X="3.75" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgQAAAAACIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>NPCContainer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="XNADash.SoundFx.SoundFxManager" Collapsed="true">
+    <Position X="9.5" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAEgAAABAAAAAQAAAAgQAAAA=</HashCode>
+      <FileName>SoundFx\SoundFxManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="XNADash.Animation.GraphicsResourceManager" Collapsed="true">
+    <Position X="9.5" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAEQAAAQAAAAAA=</HashCode>
+      <FileName>Animation\GraphicsResourceManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
   <Enum Name="XNADash.Level.TileTypeEnum" Collapsed="true">
-    <Position X="3.75" Y="1.25" Width="1.5" />
+    <Position X="0.75" Y="7.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAIBACAAAAAAAAAAAEAAAAAgAAAAAgQAIAAAAAAAAAA=</HashCode>
       <FileName>Level\TileTypeEnum.cs</FileName>
