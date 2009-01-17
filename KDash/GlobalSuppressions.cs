@@ -1,19 +1,27 @@
-// This file is used by Code Analysis to maintain SuppressMessage 
-// attributes that are applied to this project. 
-// Project-level suppressions either have no target or are given 
-// a specific target and scoped to a namespace, type, member, etc. 
-//
-// To add a suppression to this file, right-click the message in the 
-// Error List, point to "Suppress Message(s)", and click 
-// "In Project Suppression File". 
-// You do not need to add suppressions to this file manually. 
+#region
 
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1014:MarkAssembliesWithClsCompliant")]
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA2210:AssembliesShouldHaveValidStrongNames")]
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "XNA", Scope = "namespace", Target = "XNADash.Sprites")]
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "XNA", Scope = "namespace", Target = "XNADash.Level")]
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "XNA", Scope = "namespace", Target = "XNADash.Collision")]
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "XNA", Scope = "namespace", Target = "XNADash.Animation")]
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "XNA", Scope = "namespace", Target = "XNADash")]
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "XNA")]
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "XNA", Scope = "type", Target = "XNADash.XNADash")]
+using System.Diagnostics.CodeAnalysis;
+
+#endregion
+
+[assembly: SuppressMessage("Microsoft.Design", "CA1014:MarkAssembliesWithClsCompliant")]
+[assembly: SuppressMessage("Microsoft.Design", "CA2210:AssembliesShouldHaveValidStrongNames")]
+[assembly:
+    SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "XNA",
+        Scope = "namespace", Target = "XNADash.Sprites")]
+[assembly:
+    SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "XNA",
+        Scope = "namespace", Target = "XNADash.Level")]
+[assembly:
+    SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "XNA",
+        Scope = "namespace", Target = "XNADash.Collision")]
+[assembly:
+    SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "XNA",
+        Scope = "namespace", Target = "XNADash.Animation")]
+[assembly:
+    SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "XNA",
+        Scope = "namespace", Target = "XNADash")]
+[assembly: SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "XNA")]
+[assembly:
+    SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "XNA", Scope = "type",
+        Target = "XNADash.XNADash")]

@@ -1,12 +1,16 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Timers;
+
+#endregion
 
 namespace XNADash.Level
 {
     /// <summary>
     /// Simple class that counts down from whatever is specified.
     /// </summary>
-    class CountDownTimer
+    internal class CountDownTimer
     {
         private readonly Timer aTimer;
         private int countDownFrom;
@@ -19,10 +23,10 @@ namespace XNADash.Level
             aTimer = new Timer();
             aTimer.Interval = 1000; // 1000 miliseconds = 1 second
             aTimer.Enabled = true;
-            aTimer.Elapsed += new ElapsedEventHandler(aTimer_Elapsed);
+            aTimer.Elapsed += aTimer_Elapsed;
         }
 
-        void aTimer_Elapsed(object sender, ElapsedEventArgs e)
+        private void aTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
             countDownFrom--;
         }

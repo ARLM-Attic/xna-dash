@@ -1,15 +1,15 @@
-﻿
+﻿#region
+
 using System;
 using Microsoft.Xna.Framework.Audio;
+
+#endregion
 
 namespace XNADash.SoundFx
 {
     public class SoundFxManager
     {
-        readonly AudioEngine engine;
-        readonly SoundBank soundBank;
-        WaveBank waveBank;
-        private static SoundFxManager instance;
+        #region CueEnums enum
 
         public enum CueEnums
         {
@@ -21,6 +21,14 @@ namespace XNADash.SoundFx
             move,
             start
         }
+
+        #endregion
+
+        private static SoundFxManager instance;
+
+        private readonly AudioEngine engine;
+        private readonly SoundBank soundBank;
+        private WaveBank waveBank;
 
         private SoundFxManager()
         {
@@ -71,7 +79,7 @@ namespace XNADash.SoundFx
                 case CueEnums.start:
                     soundBank.PlayCue("start");
                     break;
-                default :
+                default:
                     throw new ArgumentException("Enumeration did not match cue switch");
             }
         }

@@ -1,6 +1,5 @@
 ﻿#region
 
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using XNADash.Collision;
@@ -15,16 +14,22 @@ namespace XNADash.Sprites
     /// </summary>
     public class EnemySprite : MovingSprite, NPCMovement
     {
-        private readonly MovementVector movementVector;
-        private Tile[] surroundingTiles;
-        private List<Vector2> visitedPositions;
+        #region EnemyEnum enum
+
+        /// <summary>
+        /// The enemy type
+        /// </summary>
         public enum EnemyEnum
         {
             Butterfly,
             Firefly
         }
 
+        #endregion
+
         private readonly EnemyEnum enemyType;
+        public MovementVector previousMovement = new MovementVector();
+        private Tile[] surroundingTiles;
 
         /// <summary>
         /// Initializes the sprite
@@ -40,13 +45,12 @@ namespace XNADash.Sprites
             else if (enemyType == EnemyEnum.Firefly)
                 texture = game.Content.Load<Texture2D>("firefly");
 
-            visitedPositions = new List<Vector2>();
             Speed = 500f;
 
-            movementVector = new MovementVector();
-            MoveStandStill();
+            MoveUp();
             gameInstance = game;
             Position = position;
+            Destination = position;
         }
 
         public EnemyEnum EnemyType
@@ -58,38 +62,61 @@ namespace XNADash.Sprites
 
         /// <summary>
         /// Moves the sprite automatically since it's a NPC.
-        /// Should be called from the update method of the game
+        /// Should be called from the update method of the game.
+        /// The NPC movement is implemented as a "follow the wall" algorithm, meaning
+        /// the NPC will always have the wall on the left (or right) and when encountering
+        /// an obstacle, it turns left (or right)
         /// </summary>
         public void NextMove()
         {
-            //TODO: Finish implementing movement algorithm
-            // Update visitedPostions
-            MarkAsVisited(Position);
-            // Update path
-
-
-            // Get sourrounding tiles
-            surroundingTiles = gameInstance.CurrentLevel.GetSurroundingTiles(Position);
-            // Select next tile to go to if we're done moving
-            if (surroundingTiles != null &&
-                movementVector.XDirection == MovementVector.DirectionX.None &&
-                movementVector.YDirection == MovementVector.DirectionY.None)
+            //TODO: Implement follow wall algorithm
+            if (currentMovement.IsMoving() == false)
             {
-                if (surroundingTiles[0] != null && surroundingTiles[0].TileType == TileTypeEnum.Space && !visitedPositions.Contains(surroundingTiles[0].Position))
-                    Destination = surroundingTiles[0].Position;
-                else if (surroundingTiles[1] != null && surroundingTiles[1].TileType == TileTypeEnum.Space && !visitedPositions.Contains(surroundingTiles[1].Position))
-                    Destination = surroundingTiles[1].Position;
-                else if (surroundingTiles[3] != null && surroundingTiles[3].TileType == TileTypeEnum.Space && !visitedPositions.Contains(surroundingTiles[3].Position))
-                    Destination = surroundingTiles[3].Position;
-                else if (surroundingTiles[2] != null && surroundingTiles[2].TileType == TileTypeEnum.Space && !visitedPositions.Contains(surroundingTiles[2].Position))
-                    Destination = surroundingTiles[2].Position;
-                else
-                    visitedPositions = new List<Vector2>();
+                if (CanMove())
+                {
+                    // Select next tile to go to if we're done moving
+                    if (surroundingTiles != null)
+                    {
+                        // If we were going up, then try right if we can't go there
+                        if (previousMovement.YDirection == MovementVector.DirectionY.Up)
+                        {
+                            if (surroundingTiles[0].TileType == TileTypeEnum.Space)
+                                Destination = surroundingTiles[0].Position;
+                            else
+                                MoveRight();
+                        }
+                        
+                            // If we were going left, then try right if we can't go there
+                        else if (previousMovement.XDirection == MovementVector.DirectionX.Right)
+                        {
+                            if (surroundingTiles[2].TileType == TileTypeEnum.Space)
+                                Destination = surroundingTiles[2].Position;
+                            else
+                                MoveDown();
+                        }
 
-                DetermineDirection();
+                            // If we were going left, then try right if we can't go there
+                        else if (previousMovement.YDirection == MovementVector.DirectionY.Down)
+                        {
+                            if (surroundingTiles[3].TileType == TileTypeEnum.Space)
+                                Destination = surroundingTiles[3].Position;
+                            else
+                                MoveLeft();
+                        }
+
+                            // If we were going left, then try right if we can't go there
+                        else if (previousMovement.XDirection == MovementVector.DirectionX.Left)
+                        {
+                            if (surroundingTiles[1].TileType == TileTypeEnum.Space)
+                                Destination = surroundingTiles[1].Position;
+                            else
+                                MoveUp();
+                        }
+
+                        DetermineDirection();
+                    }
+                }
             }
-
-            // If nowhere to go, select previous
         }
 
         #endregion
@@ -99,14 +126,41 @@ namespace XNADash.Sprites
         /// </summary>
         private void DetermineDirection()
         {
-            if (Position.Y > Destination.Y)
-                MoveUp();
-            else if (Position.X < Destination.X)
-                MoveRight();
-            else if (Position.Y < Destination.Y)
-                MoveDown();
-            else if (Position.X > Destination.X)
-                MoveLeft();
+            if (previousMovement.IsMoving())
+            {
+                if (Position.Y > Destination.Y)
+                    MoveUp();
+                else if (Position.X < Destination.X)
+                    MoveRight();
+                else if (Position.Y < Destination.Y)
+                    MoveDown();
+                else if (Position.X > Destination.X)
+                    MoveLeft();
+
+                previousMovement.YDirection = currentMovement.YDirection;
+                previousMovement.XDirection = currentMovement.XDirection;
+                previousMovement.HorizontalVelocity = currentMovement.HorizontalVelocity;
+                previousMovement.VerticalVelocity = currentMovement.VerticalVelocity;
+            }
+            else
+            {
+                if (previousMovement.IsMoving() == false && CanMove())
+                {
+                    if (surroundingTiles[0].TileType == TileTypeEnum.Space)
+                        MoveUp();
+                    if (surroundingTiles[1].TileType == TileTypeEnum.Space)
+                        MoveLeft();
+                    if (surroundingTiles[2].TileType == TileTypeEnum.Space)
+                        MoveRight();
+                    if (surroundingTiles[3].TileType == TileTypeEnum.Space)
+                        MoveDown();
+                }
+
+                previousMovement.YDirection = currentMovement.YDirection;
+                previousMovement.XDirection = currentMovement.XDirection;
+                previousMovement.HorizontalVelocity = currentMovement.HorizontalVelocity;
+                previousMovement.VerticalVelocity = currentMovement.VerticalVelocity;
+            }
         }
 
         public override bool CollidesWith(Tile tile)
@@ -122,10 +176,21 @@ namespace XNADash.Sprites
             return result;
         }
 
-        private void MarkAsVisited(Vector2 position)
+        /// <summary>
+        /// Deterimes if the NPC can move.
+        /// </summary>
+        /// <returns>True if it is possible to move, false if not</returns>
+        private bool CanMove()
         {
-            if (!visitedPositions.Contains(position))
-                visitedPositions.Add(position);
+            surroundingTiles = gameInstance.CurrentLevel.GetSurroundingTiles(Position);
+
+            foreach (Tile tile in surroundingTiles)
+            {
+                if (tile != null && tile.TileType == TileTypeEnum.Space)
+                    return true;
+            }
+
+            return false;
         }
     }
 }

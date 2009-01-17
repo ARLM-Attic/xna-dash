@@ -1,10 +1,7 @@
 ﻿#region
 
 using System;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using XNADash.Animation;
-using XNADash.Sprites;
 
 #endregion
 
@@ -98,28 +95,36 @@ namespace XNADash.Level
             switch (tile.TileType)
             {
                 case TileTypeEnum.Rock:
-                    tile.Texture = GraphicsResourceManager.Instance.LoadTexture(GraphicsResourceManager.GraphicsEnum.Rock);
+                    tile.Texture =
+                        GraphicsResourceManager.Instance.LoadTexture(GraphicsResourceManager.GraphicsEnum.Rock);
                     break;
                 case TileTypeEnum.Diamond:
-                    tile.Texture = GraphicsResourceManager.Instance.LoadTexture(GraphicsResourceManager.GraphicsEnum.Diamond);
+                    tile.Texture =
+                        GraphicsResourceManager.Instance.LoadTexture(GraphicsResourceManager.GraphicsEnum.Diamond);
                     break;
                 case TileTypeEnum.Earth:
-                    tile.Texture = GraphicsResourceManager.Instance.LoadTexture(GraphicsResourceManager.GraphicsEnum.Dirt);
+                    tile.Texture =
+                        GraphicsResourceManager.Instance.LoadTexture(GraphicsResourceManager.GraphicsEnum.Dirt);
                     break;
                 case TileTypeEnum.Space:
-                    tile.Texture = GraphicsResourceManager.Instance.LoadTexture(GraphicsResourceManager.GraphicsEnum.Space);
+                    tile.Texture =
+                        GraphicsResourceManager.Instance.LoadTexture(GraphicsResourceManager.GraphicsEnum.Space);
                     break;
                 case TileTypeEnum.Exit:
-                    tile.Texture = GraphicsResourceManager.Instance.LoadTexture(GraphicsResourceManager.GraphicsEnum.Exit);
+                    tile.Texture =
+                        GraphicsResourceManager.Instance.LoadTexture(GraphicsResourceManager.GraphicsEnum.Exit);
                     break;
                 case TileTypeEnum.MagicWall:
-                    tile.Texture = GraphicsResourceManager.Instance.LoadTexture(GraphicsResourceManager.GraphicsEnum.MagicWall);
+                    tile.Texture =
+                        GraphicsResourceManager.Instance.LoadTexture(GraphicsResourceManager.GraphicsEnum.MagicWall);
                     break;
                 case TileTypeEnum.TitaniumWall:
-                    tile.Texture = GraphicsResourceManager.Instance.LoadTexture(GraphicsResourceManager.GraphicsEnum.Titanium);
+                    tile.Texture =
+                        GraphicsResourceManager.Instance.LoadTexture(GraphicsResourceManager.GraphicsEnum.Titanium);
                     break;
                 case TileTypeEnum.Wall:
-                    tile.Texture = GraphicsResourceManager.Instance.LoadTexture(GraphicsResourceManager.GraphicsEnum.Wall);
+                    tile.Texture =
+                        GraphicsResourceManager.Instance.LoadTexture(GraphicsResourceManager.GraphicsEnum.Wall);
                     break;
             }
         }

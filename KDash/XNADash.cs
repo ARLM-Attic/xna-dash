@@ -20,35 +20,21 @@ namespace XNADash
     public class XNADash : Game
     {
         public static GraphicsDeviceManager graphics;
-        
+        private readonly Vector2 HUDPosition;
+        private readonly bool playerIsDead;
+
         public Camera2D camera;
         private string collisionDebugString;
         private KeyboardState currentKeyboardState;
         private Level.Level currentLevel;
         private Vector2 displaySize;
         public SpriteFont font;
-        private bool playerIsDead;
+        private HUD gameHUD;
         private MovingSprite playerSprite;
         private SceneGraph sceneGraph;
+        private int score;
         private SpriteBatch spriteBatch;
         public bool visibilityChanged;
-        private HUD gameHUD;
-        private int score;
-        private Vector2 HUDPosition;
-
-
-        public Level.Level CurrentLevel
-        {
-            get { return currentLevel; }
-        }
-
-        /// <summary>
-        /// The players current score
-        /// </summary>
-        public int Score
-        {
-            get { return score; }
-        }
 
         /// <summary>
         /// Default constructor.
@@ -64,6 +50,20 @@ namespace XNADash
             HUDPosition = new Vector2(0, graphics.PreferredBackBufferHeight - 20);
 
             playerIsDead = false;
+        }
+
+
+        public Level.Level CurrentLevel
+        {
+            get { return currentLevel; }
+        }
+
+        /// <summary>
+        /// The players current score
+        /// </summary>
+        public int Score
+        {
+            get { return score; }
         }
 
         /// <summary>
@@ -106,7 +106,7 @@ namespace XNADash
 
             // Set up player sprite
             playerSprite = new MovingSprite(this, Content.Load<Texture2D>("player2"), CurrentLevel.StartPosition);
-            
+
             // Set Up a 2D Camera
             camera = new Camera2D(spriteBatch);
 
@@ -144,7 +144,7 @@ namespace XNADash
             HandleInput(gameTime);
 
             playerSprite.Move(gameTime);
-            
+
             CurrentLevel.NpcContainer.Update(gameTime);
 
             // Check if player touches an enemy
@@ -197,13 +197,15 @@ namespace XNADash
             sceneGraph.AddToScene(CurrentLevel.NpcContainer.AddToScene());
 
             // Write debug info
-            sceneGraph.AddText("Player position: " + playerSprite.Position + " Player destination: " + playerSprite.Destination);
+            sceneGraph.AddText("Player position: " + playerSprite.Position + " Player destination: " +
+                               playerSprite.Destination);
             sceneGraph.AddText("Tile position:" + CurrentLevel.ToTileCoordinate(playerSprite.Position));
             sceneGraph.AddText("Player is dead:" + playerIsDead);
-            sceneGraph.AddText("Player keypress: " + playerSprite.currentMovement.XDirection + " " + playerSprite.currentMovement.YDirection);
+            sceneGraph.AddText("Player keypress: " + playerSprite.currentMovement.XDirection + " " +
+                               playerSprite.currentMovement.YDirection);
             sceneGraph.AddText(collisionDebugString);
             sceneGraph.AddText("Cam position:" + camera.Position);
-            
+
             sceneGraph.Draw();
 
             gameHUD.Draw(font, HUDPosition);

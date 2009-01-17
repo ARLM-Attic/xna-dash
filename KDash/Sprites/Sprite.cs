@@ -22,9 +22,12 @@ namespace XNADash.Sprites
         public Vector2 Position;
         public Texture2D texture;
 
+        /// <summary>
+        /// Default constructor, not used
+        /// </summary>
         public Sprite()
         {
-            
+            throw new NotSupportedException("Use the other constructor");
         }
 
         /// <summary>
@@ -42,6 +45,9 @@ namespace XNADash.Sprites
             CalculateBounds();
         }
 
+        /// <summary>
+        /// Returns the center of the sprite texture.
+        /// </summary>
         public Vector2 CenterPosition
         {
             get { return new Vector2((int) Position.X + (texture.Width/2), (int) Position.Y + (texture.Height/2)); }
@@ -158,6 +164,10 @@ namespace XNADash.Sprites
             bounds = new Rectangle((int) Position.X, (int) Position.Y, texture.Width, texture.Height);
         }
 
+        /// <summary>
+        /// Adds the sprite texture to the scene
+        /// </summary>
+        /// <returns>A <see cref="Scene2DNode"/> to use in the scene</returns>
         public Scene2DNode ToSceneGraphNode()
         {
             Scene2DNode returnValue = new Scene2DNode(texture, Position);

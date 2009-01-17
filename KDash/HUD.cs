@@ -1,7 +1,10 @@
-﻿
+﻿#region
+
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using XNADash.Level;
+
+#endregion
 
 namespace XNADash
 {
@@ -10,13 +13,13 @@ namespace XNADash
     /// How many lives are left, what the score is and so on.
     /// This is the first very simple version!!
     /// </summary>
-    class HUD
+    internal class HUD
     {
+        private readonly SpriteBatch batch;
+        private readonly CountDownTimer timer;
+        private string HUDString;
         public string Score;
         public string TimeLeft;
-        private readonly SpriteBatch batch;
-        private string HUDString;
-        private readonly CountDownTimer timer;
 
         /// <summary>
         /// Constructor to initialize the HUD

@@ -17,18 +17,18 @@ namespace XNADash.Level
     {
         private readonly TileFactory factory;
         public readonly XNADash game;
+        private readonly NPCContainer npcContainer;
         private int cellHeight;
         private int cellWidth;
         private int diamondsToCollect;
         private int finishTime;
         private int height;
         private string levelName;
+        private Vector2 startPosition;
         private Tile[,] tileGrid;
         private int width;
         public int WorldHeight;
         public int WorldWidth;
-        private Vector2 startPosition;
-        private NPCContainer npcContainer;
 
         /// <summary>
         /// Constructor of the level
@@ -136,7 +136,7 @@ namespace XNADash.Level
                 y > 0 && y < WorldHeight)
             {
                 Vector2 co = ToTileCoordinate(new Vector2(x, y));
-                result = level[(int)co.X, (int)co.Y];
+                result = level[(int) co.X, (int) co.Y];
             }
 
             return result;
@@ -226,8 +226,8 @@ namespace XNADash.Level
 
             line = line.Replace("start=", "");
             string[] tempString = line.Split(',');
-            float xTileCoordinate = (float)Convert.ToDecimal(tempString[0]) * 100;
-            float yTileCoordinate = (float)Convert.ToDecimal(tempString[1]) * 100;
+            float xTileCoordinate = (float) Convert.ToDecimal(tempString[0])*100;
+            float yTileCoordinate = (float) Convert.ToDecimal(tempString[1])*100;
             startPosition = new Vector2(xTileCoordinate, yTileCoordinate);
         }
 
@@ -433,12 +433,12 @@ namespace XNADash.Level
         /// <returns>A list of 4 tiles</returns>
         public Tile[] GetSurroundingTiles(Vector2 position)
         {
-            Tile[] result = new Tile[9];
+            Tile[] result = new Tile[4];
 
-            result[0] = GetTile((int)position.X, (int)position.Y - cellHeight, ref tileGrid);
-            result[1] = GetTile((int)position.X - cellWidth, (int)position.Y, ref tileGrid);
-            result[2] = GetTile((int)position.X + cellWidth, (int)position.Y + cellHeight, ref tileGrid);
-            result[3] = GetTile((int)position.X, (int)position.Y + cellHeight, ref tileGrid);
+            result[0] = GetTile((int) position.X, (int) position.Y - cellHeight, ref tileGrid);
+            result[1] = GetTile((int) position.X - cellWidth, (int) position.Y, ref tileGrid);
+            result[2] = GetTile((int) position.X + cellWidth, (int) position.Y + cellHeight, ref tileGrid);
+            result[3] = GetTile((int) position.X, (int) position.Y + cellHeight, ref tileGrid);
 
             return result;
         }

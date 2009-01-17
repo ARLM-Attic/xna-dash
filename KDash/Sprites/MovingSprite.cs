@@ -1,10 +1,10 @@
 ﻿#region
 
+using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using XNADash.Collision;
 using XNADash.Level;
-using XNADash.SoundFx;
 
 #endregion
 
@@ -16,14 +16,18 @@ namespace XNADash.Sprites
     public class MovingSprite : Sprite
     {
         public MovementVector currentMovement = new MovementVector();
+        public Vector2 Destination;
         public float Speed = 500f;
         private GameTime spriteTime = new GameTime();
-        public Vector2 Destination;
 
+        /// <summary>
+        /// Default contructor
+        /// </summary>
         public MovingSprite()
         {
-            
+            throw new NotImplementedException("Please use other constructor");
         }
+
         /// <summary>
         /// Constructor to create the sprite
         /// </summary>
@@ -34,7 +38,7 @@ namespace XNADash.Sprites
             : base(game, Tex, position)
         {
             gameInstance = game;
-            Destination = new Vector2();
+            Destination = position;
             MoveStandStill();
         }
 
@@ -54,8 +58,11 @@ namespace XNADash.Sprites
         /// </summary>
         public void MoveUp()
         {
-            currentMovement.VerticalVelocity += Speed*spriteTime.ElapsedGameTime.Milliseconds/1000;
-            currentMovement.YDirection = MovementVector.DirectionY.Up;
+            if (spriteTime.ElapsedGameTime.Milliseconds > 0)
+            {
+                currentMovement.VerticalVelocity += Speed*spriteTime.ElapsedGameTime.Milliseconds/1000;
+                currentMovement.YDirection = MovementVector.DirectionY.Up;
+            }
         }
 
         /// <summary>
@@ -63,8 +70,11 @@ namespace XNADash.Sprites
         /// </summary>
         public void MoveDown()
         {
-            currentMovement.VerticalVelocity += Speed*spriteTime.ElapsedGameTime.Milliseconds/1000;
-            currentMovement.YDirection = MovementVector.DirectionY.Down;
+            if (spriteTime.ElapsedGameTime.Milliseconds > 0)
+            {
+                currentMovement.VerticalVelocity += Speed*spriteTime.ElapsedGameTime.Milliseconds/1000;
+                currentMovement.YDirection = MovementVector.DirectionY.Down;
+            }
         }
 
         /// <summary>
@@ -72,8 +82,11 @@ namespace XNADash.Sprites
         /// </summary>
         public void MoveLeft()
         {
-            currentMovement.HorizontalVelocity += Speed*spriteTime.ElapsedGameTime.Milliseconds/1000;
-            currentMovement.XDirection = MovementVector.DirectionX.Left;
+            if (spriteTime.ElapsedGameTime.Milliseconds > 0)
+            {
+                currentMovement.HorizontalVelocity += Speed*spriteTime.ElapsedGameTime.Milliseconds/1000;
+                currentMovement.XDirection = MovementVector.DirectionX.Left;
+            }
         }
 
         /// <summary>
@@ -81,8 +94,11 @@ namespace XNADash.Sprites
         /// </summary>
         public void MoveRight()
         {
-            currentMovement.HorizontalVelocity += Speed*spriteTime.ElapsedGameTime.Milliseconds/1000;
-            currentMovement.XDirection = MovementVector.DirectionX.Right;
+            if (spriteTime.ElapsedGameTime.Milliseconds > 0)
+            {
+                currentMovement.HorizontalVelocity += Speed*spriteTime.ElapsedGameTime.Milliseconds/1000;
+                currentMovement.XDirection = MovementVector.DirectionX.Right;
+            }
         }
 
         /// <summary>
@@ -94,19 +110,19 @@ namespace XNADash.Sprites
             spriteTime = time;
 
             // Only change direction if we are at destination and are standing still
-            if (currentMovement.IsMoving())
-            {
-                // Change position
-                if (currentMovement.XDirection == MovementVector.DirectionX.Left)
-                    Position.X -= currentMovement.HorizontalVelocity;
-                if (currentMovement.XDirection == MovementVector.DirectionX.Right)
-                    Position.X += currentMovement.HorizontalVelocity;
+            //if (currentMovement.IsMoving())
+            //{
+            // Change position
+            if (currentMovement.XDirection == MovementVector.DirectionX.Left)
+                Position.X -= currentMovement.HorizontalVelocity;
+            if (currentMovement.XDirection == MovementVector.DirectionX.Right)
+                Position.X += currentMovement.HorizontalVelocity;
 
-                if (currentMovement.YDirection == MovementVector.DirectionY.Up)
-                    Position.Y -= currentMovement.VerticalVelocity;
-                if (currentMovement.YDirection == MovementVector.DirectionY.Down)
-                    Position.Y += currentMovement.VerticalVelocity;
-            }
+            if (currentMovement.YDirection == MovementVector.DirectionY.Up)
+                Position.Y -= currentMovement.VerticalVelocity;
+            if (currentMovement.YDirection == MovementVector.DirectionY.Down)
+                Position.Y += currentMovement.VerticalVelocity;
+            //}
 
             // Make sprite stop at the correct position
             if (currentMovement.XDirection == MovementVector.DirectionX.Left && Position.X < Destination.X)

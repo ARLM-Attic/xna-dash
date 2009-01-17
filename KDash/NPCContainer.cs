@@ -1,12 +1,11 @@
-﻿using System;
+﻿#region
+
 using System.Collections.Generic;
-using System.Text;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
 using XNADash.Animation;
-using XNADash.Level;
 using XNADash.Sprites;
+
+#endregion
 
 namespace XNADash
 {
@@ -15,8 +14,6 @@ namespace XNADash
     /// </summary>
     public class NPCContainer
     {
-        private List<EnemySprite> npcList;
-
         /// <summary>
         /// Constructor
         /// </summary>
@@ -25,11 +22,7 @@ namespace XNADash
             NPCList = new List<EnemySprite>();
         }
 
-        public List<EnemySprite> NPCList
-        {
-            get { return npcList; }
-            set { npcList = value; }
-        }
+        public List<EnemySprite> NPCList { get; set; }
 
         /// <summary>
         /// Adds a single NPC to the list of NPCs in the gameworld
@@ -55,7 +48,7 @@ namespace XNADash
                     sprite.NextMove();
 
                 sprite.Move(time);
-            }            
+            }
         }
 
         /// <summary>
