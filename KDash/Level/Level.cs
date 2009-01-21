@@ -429,7 +429,7 @@ namespace XNADash.Level
         /// Where x is the position specified
         /// </remarks>
         /// </summary>
-        /// <param name="position">The initial position</param>
+        /// <param name="position">The world coordinate</param>
         /// <returns>A list of 4 tiles</returns>
         public Tile[] GetSurroundingTiles(Vector2 position)
         {

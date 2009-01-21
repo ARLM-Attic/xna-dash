@@ -27,7 +27,6 @@ namespace XNADash.Sprites
         /// </summary>
         public Sprite()
         {
-            //throw new NotSupportedException("Use the other constructor");
         }
 
         /// <summary>

@@ -163,6 +163,52 @@ namespace XNADash.Sprites
             }
         }
 
+        /// <summary>
+        /// Gets the tile to the left or right of the sprite, depending on the direction of the sprite
+        /// </summary>
+        /// <param name="tilePosition">The tile position in world coordinates</param>
+        /// <param name="leftOrRight">If true, the tile to the left is returned. If false, the right tile is returned</param>
+        /// <returns>The tile to the left or right</returns>
+        private Tile GetSideTile(Vector2 tilePosition, bool leftOrRight)
+        {
+            Tile result = null;
+            Tile[] tiles = gameInstance.CurrentLevel.GetSurroundingTiles(tilePosition);
+
+            if (currentMovement.XDirection == MovementVector.DirectionX.Left)
+            {
+                if (leftOrRight)
+                    result = tiles[3];
+                else
+                    result = tiles[0];
+            }
+
+            if (currentMovement.XDirection == MovementVector.DirectionX.Right)
+            {
+                if (leftOrRight)
+                    result = tiles[0];
+                else
+                    result = tiles[3];
+            }
+
+            if (currentMovement.YDirection == MovementVector.DirectionY.Up)
+            {
+                if (leftOrRight)
+                    result = tiles[1];
+                else
+                    result = tiles[2];
+            }
+
+            if (currentMovement.YDirection == MovementVector.DirectionY.Down)
+            {
+                if (leftOrRight)
+                    result = tiles[2];
+                else
+                    result = tiles[1];
+            }
+
+            return result;
+        }
+
         public override bool CollidesWith(Tile tile)
         {
             bool result = false;

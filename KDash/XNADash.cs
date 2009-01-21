@@ -169,7 +169,7 @@ namespace XNADash
             camera.CenterAt(playerSprite.CenterPosition);
 
             // Update the HUD
-            gameHUD.Update(Score.ToString());
+            gameHUD.Update(Score.ToString(), score / 100, currentLevel.DiamondsToCollect);
 
             base.Update(gameTime);
         }

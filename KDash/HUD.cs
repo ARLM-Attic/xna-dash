@@ -20,6 +20,7 @@ namespace XNADash
         private string HUDString;
         public string Score;
         public string TimeLeft;
+        public string Diamonds;
 
         /// <summary>
         /// Constructor to initialize the HUD
@@ -43,9 +44,11 @@ namespace XNADash
         /// Updates the HUD with the current game state
         /// </summary>
         /// <param name="currentScore">The players score</param>
-        public void Update(string currentScore)
+        /// <param name="currentDiamonds">How many diamonds does the player current have</param>
+        /// <param name="diamondsToFinish">How many diamonds does the player need to finish the level</param>
+        public void Update(string currentScore, int currentDiamonds, int diamondsToFinish)
         {
-            HUDString = Score + currentScore + TimeLeft + LevelTimer;
+            HUDString = Score + currentScore + TimeLeft + LevelTimer + " " + currentDiamonds + "/" + diamondsToFinish;
         }
 
         /// <summary>
