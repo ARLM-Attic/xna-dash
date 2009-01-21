@@ -25,7 +25,7 @@ namespace XNADash.Sprites
         /// </summary>
         public MovingSprite()
         {
-            throw new NotImplementedException("Please use other constructor");
+            //throw new NotImplementedException("Please use other constructor");
         }
 
         /// <summary>
