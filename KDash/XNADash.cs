@@ -29,12 +29,16 @@ namespace XNADash
         private Level.Level currentLevel;
         private Vector2 displaySize;
         public SpriteFont font;
+        public SpriteFont bigFont;
         private HUD gameHUD;
         private MovingSprite playerSprite;
         private SceneGraph sceneGraph;
         private int score;
+        private int diamondsCollected;
         private SpriteBatch spriteBatch;
         public bool visibilityChanged;
+
+        public delegate void PlayerDelegate();
 
         /// <summary>
         /// Default constructor.
@@ -47,11 +51,15 @@ namespace XNADash
 
             Content.RootDirectory = "Content";
             score = 0;
-            HUDPosition = new Vector2(0, graphics.PreferredBackBufferHeight - 20);
+            HUDPosition = new Vector2(30, graphics.PreferredBackBufferHeight - 75);
 
             playerIsDead = false;
         }
 
+        void MovingSprite_Inverted(string msg)
+        {
+            score += 10;
+        }
 
         public Level.Level CurrentLevel
         {
@@ -64,6 +72,12 @@ namespace XNADash
         public int Score
         {
             get { return score; }
+        }
+
+        public int DiamondsCollected
+        {
+            get { return diamondsCollected; }
+            set { diamondsCollected = value; }
         }
 
         /// <summary>
@@ -93,6 +107,7 @@ namespace XNADash
             //TODO: Find a better way of doing this resource management
             GraphicsResourceManager.Instance.contentManager = Content;
             font = Content.Load<SpriteFont>("david");
+            bigFont = Content.Load<SpriteFont>("DashFontBig2");
 
             currentLevel = new Level.Level(this);
             CurrentLevel.LoadLevel("level\\level01.lvl");
@@ -106,6 +121,8 @@ namespace XNADash
 
             // Set up player sprite
             playerSprite = new MovingSprite(this, Content.Load<Texture2D>("player2"), CurrentLevel.StartPosition);
+            PlayerDelegate fx = new PlayerDelegate(playerSprite.DiamondCollected);
+            MovingSprite.CollisionEvent += new MovingSprite.DashHandler(MovingSprite_Inverted);
 
             // Set Up a 2D Camera
             camera = new Camera2D(spriteBatch);
@@ -169,7 +186,7 @@ namespace XNADash
             camera.CenterAt(playerSprite.CenterPosition);
 
             // Update the HUD
-            gameHUD.Update(Score.ToString(), score / 100, currentLevel.DiamondsToCollect);
+            gameHUD.Update(Score.ToString(), score / 10, currentLevel.DiamondsToCollect);
 
             base.Update(gameTime);
         }
@@ -208,7 +225,7 @@ namespace XNADash
 
             sceneGraph.Draw();
 
-            gameHUD.Draw(font, HUDPosition);
+            gameHUD.Draw(bigFont, HUDPosition);
 
             base.Draw(gameTime);
             spriteBatch.End();
@@ -279,14 +296,6 @@ namespace XNADash
             displaySize.X = graphics.GraphicsDevice.PresentationParameters.BackBufferWidth;
             displaySize.Y = graphics.GraphicsDevice.PresentationParameters.BackBufferHeight;
             visibilityChanged = true;
-        }
-
-        /// <summary>
-        /// The player has picked up a diamond
-        /// </summary>
-        public void DiamondCollected()
-        {
-            score += 10;
         }
     }
 }

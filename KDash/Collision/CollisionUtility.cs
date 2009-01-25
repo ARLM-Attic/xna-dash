@@ -1,5 +1,6 @@
 ﻿#region
 
+using System;
 using Microsoft.Xna.Framework;
 using XNADash.Animation;
 using XNADash.Level;
@@ -70,7 +71,8 @@ namespace XNADash.Collision
             {
                 tile.TileType = TileTypeEnum.Space;
                 tile.Texture = GraphicsResourceManager.Instance.LoadTexture(GraphicsResourceManager.GraphicsEnum.Space);
-                //gameInstance.DiamondCollected();
+                player.DiamondCollected();
+                
                 SoundFxManager.Instance.PlaySound(SoundFxManager.CueEnums.diamond);
             }
 

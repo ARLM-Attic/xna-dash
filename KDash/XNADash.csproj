@@ -83,6 +83,7 @@
     <Compile Include="Animation\SceneGraph.cs" />
     <Compile Include="Collision\CollisionUtility.cs" />
     <Compile Include="Animation\Scene2DNode.cs" />
+    <Compile Include="DashEvent.cs" />
     <Compile Include="FrameRateCounter.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="HUD.cs" />

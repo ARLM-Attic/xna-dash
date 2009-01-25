@@ -20,6 +20,9 @@ namespace XNADash.Sprites
         public float Speed = 500f;
         private GameTime spriteTime = new GameTime();
 
+        public delegate void DashHandler(string msg);
+        public static event DashHandler CollisionEvent;
+
         /// <summary>
         /// Default contructor
         /// </summary>
@@ -33,8 +36,7 @@ namespace XNADash.Sprites
         /// <param name="game">Reference to the main game</param>
         /// <param name="Tex">The texture to draw</param>
         /// <param name="position">The initial position of the sprite in game coordinates</param>
-        public MovingSprite(XNADash game, Texture2D Tex, Vector2 position)
-            : base(game, Tex, position)
+        public MovingSprite(XNADash game, Texture2D Tex, Vector2 position) : base(game, Tex, position)
         {
             gameInstance = game;
             Destination = position;
@@ -164,6 +166,11 @@ namespace XNADash.Sprites
             }
 
             return result;
+        }
+
+        public void DiamondCollected()
+        {
+            CollisionEvent("inverted by z-axis");
         }
     }
 }
