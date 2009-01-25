@@ -21,7 +21,6 @@ namespace XNADash.Animation
             MagicWall,
             Player,
             Rock,
-            Scoreboard,
             Space,
             Titanium,
             Wall
@@ -76,9 +75,6 @@ namespace XNADash.Animation
                     break;
                 case GraphicsEnum.Rock:
                     result = contentManager.Load<Texture2D>("rock");
-                    break;
-                case GraphicsEnum.Scoreboard:
-                    result = contentManager.Load<Texture2D>("scoreboard");
                     break;
                 case GraphicsEnum.Space:
                     result = contentManager.Load<Texture2D>("space");

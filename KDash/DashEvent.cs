@@ -5,11 +5,11 @@ namespace XNADash
     public class DashEvent
     {
         public delegate void DashEventHandler(string msg);
-        public static event DashEventHandler CollisionEvent;
+        public static event DashEventHandler DiamondCollected;
 
         public void InvertZ()
         {
-            CollisionEvent("inverted by z-axis");
+            DiamondCollected("inverted by z-axis");
         }
     }
      */

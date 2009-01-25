@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -21,7 +22,7 @@ namespace XNADash
     {
         public static GraphicsDeviceManager graphics;
         private readonly Vector2 HUDPosition;
-        private readonly bool playerIsDead;
+        private bool playerIsDead;
 
         public Camera2D camera;
         private string collisionDebugString;
@@ -37,8 +38,6 @@ namespace XNADash
         private int diamondsCollected;
         private SpriteBatch spriteBatch;
         public bool visibilityChanged;
-
-        public delegate void PlayerDelegate();
 
         /// <summary>
         /// Default constructor.
@@ -56,9 +55,19 @@ namespace XNADash
             playerIsDead = false;
         }
 
-        void MovingSprite_Inverted(string msg)
+        /// <summary>
+        /// Adds the points to the score when collecting a diamond
+        /// </summary>
+        /// <param name="points">The points given</param>
+        void OnDiamondCollected(int points)
         {
-            score += 10;
+            if (points > 0)
+            {
+                score += points;
+                DiamondsCollected++;
+            }
+            else
+                throw new ArgumentException("Score must be higher than 0");
         }
 
         public Level.Level CurrentLevel
@@ -121,8 +130,10 @@ namespace XNADash
 
             // Set up player sprite
             playerSprite = new MovingSprite(this, Content.Load<Texture2D>("player2"), CurrentLevel.StartPosition);
-            PlayerDelegate fx = new PlayerDelegate(playerSprite.DiamondCollected);
-            MovingSprite.CollisionEvent += new MovingSprite.DashHandler(MovingSprite_Inverted);
+            MovingSprite.DiamondCollected += new MovingSprite.DiamondEventHandler(OnDiamondCollected);
+
+            Tile firstTile = CurrentLevel.GetTile(ref playerSprite.Position);
+            Tile.TileCollision += new Tile.LevelEventHandler(OnTileCollision);
 
             // Set Up a 2D Camera
             camera = new Camera2D(spriteBatch);
@@ -140,6 +151,16 @@ namespace XNADash
             gameHUD.LevelTimer.Start();
 
             SoundFxManager.Instance.PlaySound(SoundFxManager.CueEnums.start);
+        }
+
+        void OnTileCollision(TileTypeEnum tileType)
+        {
+            if (CurrentLevel.DiamondsToCollect == DiamondsCollected)
+            {
+                SoundFxManager.Instance.PlaySound(SoundFxManager.CueEnums.applause);
+                Thread.Sleep(6000);
+                Exit();
+            }
         }
 
         /// <summary>
@@ -164,10 +185,19 @@ namespace XNADash
 
             CurrentLevel.NpcContainer.Update(gameTime);
 
-            // Check if player touches an enemy
-            //TODO: Find a way to check if player touches an NPC
-            //if (playerSprite.CollidesWith(butterflySprite) || playerSprite.CollidesWith(fireflySprite))
-            //    playerIsDead = true;
+            if (playerIsDead == false)
+            {
+                // Check if player touches an enemy
+                foreach (EnemySprite sprite in CurrentLevel.NpcContainer.NPCList)
+                {
+                    if (playerSprite.CollidesWith(sprite))
+                    {
+                        playerIsDead = true;
+                        Thread.Sleep(3000);
+                        Exit();
+                    }
+                }
+            }
 
             // Check the tiles the player touches
             List<Tile> tileToCheck = CurrentLevel.GetTiles(playerSprite.bounds);
@@ -186,7 +216,7 @@ namespace XNADash
             camera.CenterAt(playerSprite.CenterPosition);
 
             // Update the HUD
-            gameHUD.Update(Score.ToString(), score / 10, currentLevel.DiamondsToCollect);
+            gameHUD.Update(Score.ToString(), DiamondsCollected, currentLevel.DiamondsToCollect);
 
             base.Update(gameTime);
         }

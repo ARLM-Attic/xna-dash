@@ -3,21 +3,28 @@
   <Class Name="XNADash.XNADash" Collapsed="true">
     <Position X="6.75" Y="5.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AIYAEECAAggCAwoAAABIAEUAAAAEAAiABAAAAAAAEAQ=</HashCode>
+      <HashCode>AIYAEECABgACAwoAAABIAEUAAAAEAAiQBAAAAABAFAQ=</HashCode>
       <FileName>XNADash.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Field Name="camera" />
       <Field Name="currentLevel" />
+      <Field Name="gameHUD" />
       <Field Name="playerSprite" />
       <Field Name="sceneGraph" />
-      <Field Name="gameHUD" />
     </ShowAsAssociation>
   </Class>
   <Class Name="XNADash.Level.Level" Collapsed="true">
     <Position X="3.75" Y="5.25" Width="1.5" />
+    <NestedTypes>
+      <Delegate Name="XNADash.Level.Level.LevelEventHandler" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Level\Level.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+    </NestedTypes>
     <TypeIdentifier>
-      <HashCode>ARAAAFADFIAkBhYAQAEGIEIGBGACACAMEEFAQABEAEA=</HashCode>
+      <HashCode>ARAAAFADFIAkBhYAQAEGIEIGhGACACAMEEFEQABEAEA=</HashCode>
       <FileName>Level\Level.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -72,14 +79,14 @@
   <Class Name="XNADash.Sprites.Sprite" Collapsed="true">
     <Position X="9.75" Y="4" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAACAAAgAgABAABAAAABAAAgCABAADAABAAIA=</HashCode>
+      <HashCode>AAAAAAAAACAAAgAgABAAAAAAABAAAgCAAAADAABAAAA=</HashCode>
       <FileName>Sprites\Sprite.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="XNADash.Sprites.EnemySprite" Collapsed="true">
     <Position X="9.75" Y="6.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAJAADAAAAAAABAAAAARAAAAAAAAAAgAAAAQAAAAAA=</HashCode>
+      <HashCode>AAAAACDAAQAAAABAAAAARAAAAAAAAEAAAAAAQAAAAAA=</HashCode>
       <FileName>Sprites\EnemySprite.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -87,14 +94,14 @@
   <Class Name="XNADash.Sprites.MovingSprite" Collapsed="true">
     <Position X="9.75" Y="5.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAEAAAAAAIAAAAAAAAAARAABAAAAAAQMQAAAAAAAQAA=</HashCode>
+      <HashCode>AAEAAAAAAIgAAAAAAAAARAABAAAAAAQMQAACAAAAQAA=</HashCode>
       <FileName>Sprites\MovingSprite.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="XNADash.HUD" Collapsed="true">
     <Position X="6.75" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAQAAAAAAAAAAggAAAAAAAAAAAAABAAAAAIAAAEAABA=</HashCode>
+      <HashCode>AAQAAAAAAAEAAggAAAAAAAAAAAAABAAAAAIAAAEAABA=</HashCode>
       <FileName>HUD.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -111,7 +118,7 @@
   <Class Name="XNADash.NPCContainer" Collapsed="true">
     <Position X="3.75" Y="7.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AgQAAAAACIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AgQAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>NPCContainer.cs</FileName>
     </TypeIdentifier>
   </Class>

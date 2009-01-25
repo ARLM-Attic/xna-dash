@@ -19,6 +19,9 @@ namespace XNADash.Level
         public Texture2D Texture;
         public TileTypeEnum TileType;
 
+        public delegate void LevelEventHandler(TileTypeEnum tileType);
+        public static event LevelEventHandler TileCollision;
+
         /// <summary>
         /// The height of the tile.
         /// </summary>
@@ -45,6 +48,16 @@ namespace XNADash.Level
 
                 return 0;
             }
+        }
+
+        /// <summary>
+        /// Fires the <see cref="TileCollision"/> event.
+        /// Event is wrapped so the static <see cref="TileCollision"/> can fire the event.
+        /// </summary>
+        public void FireTileCollisionEvent(TileTypeEnum tileType)
+        {
+            if (TileCollision != null)
+                TileCollision(tileType);
         }
 
         /// <summary>

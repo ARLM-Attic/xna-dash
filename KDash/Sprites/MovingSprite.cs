@@ -1,6 +1,5 @@
 ﻿#region
 
-using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using XNADash.Collision;
@@ -20,8 +19,8 @@ namespace XNADash.Sprites
         public float Speed = 500f;
         private GameTime spriteTime = new GameTime();
 
-        public delegate void DashHandler(string msg);
-        public static event DashHandler CollisionEvent;
+        public delegate void DiamondEventHandler(int msg);
+        public static event DiamondEventHandler DiamondCollected;
 
         /// <summary>
         /// Default contructor
@@ -168,9 +167,27 @@ namespace XNADash.Sprites
             return result;
         }
 
-        public void DiamondCollected()
+        public virtual bool CollidesWith(EnemySprite Npc)
         {
-            CollisionEvent("inverted by z-axis");
+            bool result = false;
+
+            if (CollisionUtility.Intersects(bounds, Npc.bounds))
+            {
+                CollisionUtility.ResolvePlayerNpcCollision(this, Npc);
+                result = true;
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Fires the <see cref="DiamondCollected"/> event.
+        /// Event is wrapped so the static <see cref="CollisionUtility"/> can fire the event.
+        /// </summary>
+        public void FireDiamondCollectedEvent()
+        {
+            if (DiamondCollected != null)
+                DiamondCollected(10);
         }
     }
 }

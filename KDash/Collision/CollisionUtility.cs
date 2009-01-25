@@ -1,6 +1,5 @@
 ﻿#region
 
-using System;
 using Microsoft.Xna.Framework;
 using XNADash.Animation;
 using XNADash.Level;
@@ -71,7 +70,7 @@ namespace XNADash.Collision
             {
                 tile.TileType = TileTypeEnum.Space;
                 tile.Texture = GraphicsResourceManager.Instance.LoadTexture(GraphicsResourceManager.GraphicsEnum.Space);
-                player.DiamondCollected();
+                player.FireDiamondCollectedEvent();
                 
                 SoundFxManager.Instance.PlaySound(SoundFxManager.CueEnums.diamond);
             }
@@ -86,11 +85,21 @@ namespace XNADash.Collision
             //TODO: Implement level complete
             if (tile.TileType == TileTypeEnum.Exit)
             {
-                //if (gameInstance.CurrentLevel.DiamondsToCollect < gameInstance.Score)
-                //{
-                //    SoundFxManager.Instance.PlaySound(SoundFxManager.CueEnums.applause);
-                //    gameInstance.Exit();
-                //}
+                tile.FireTileCollisionEvent(tile.TileType);
+            }
+        }
+
+        /// <summary>
+        /// Performs what need to be done if the player touches another NPC
+        /// </summary>
+        /// <param name="player">The player</param>
+        /// <param name="npc">The NPC</param>
+        public static void ResolvePlayerNpcCollision(MovingSprite player, EnemySprite npc)
+        {
+            if (Intersects(player.bounds, npc.bounds))
+            {
+                // Player bumped into something, play the bump cue
+                SoundFxManager.Instance.PlaySound(SoundFxManager.CueEnums.exit);
             }
         }
 
