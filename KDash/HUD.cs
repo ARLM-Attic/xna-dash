@@ -20,7 +20,6 @@ namespace XNADash
         private string HUDString;
         public string Score;
         public string TimeLeft;
-        public string Diamonds;
 
         /// <summary>
         /// Constructor to initialize the HUD

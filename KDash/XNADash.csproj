@@ -20,6 +20,10 @@
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <IsWebBootstrapper>false</IsWebBootstrapper>
+    <ManifestCertificateThumbprint>9E34B0FCCA58CA8F8DC16F98A29B4B6BA36B08F2</ManifestCertificateThumbprint>
+    <ManifestKeyFile>XNADash_TemporaryKey.pfx</ManifestKeyFile>
+    <GenerateManifests>true</GenerateManifests>
+    <SignManifests>true</SignManifests>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -30,8 +34,8 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <ApplicationRevision>2</ApplicationRevision>
+    <ApplicationVersion>0.1.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -75,7 +79,13 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="TomShane.Neoforce.Controls, Version=0.1.418.37, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\TomShane.Neoforce.Controls.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Animation\Camera2D.cs" />
@@ -85,7 +95,12 @@
     <Compile Include="Animation\Scene2DNode.cs" />
     <Compile Include="DashEvent.cs" />
     <Compile Include="FrameRateCounter.cs" />
+    <Compile Include="GameStateManager.cs" />
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="GUI\ExitWindow.cs" />
+    <Compile Include="GUI\HighscoreWindow.cs" />
+    <Compile Include="GUI\MainWindow.cs" />
+    <Compile Include="GUI\OptionsWindow.cs" />
     <Compile Include="HUD.cs" />
     <Compile Include="Level\CountDownTimer.cs" />
     <Compile Include="Level\Level.cs" />
@@ -119,6 +134,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Main ClassDiagram.cd" />
+    <None Include="Skins\Default.skin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Skins\Green.skin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="XNADash_TemporaryKey.pfx" />
     <Content Include="Level\TestLevel.lvl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -143,6 +165,11 @@
     <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
       <Visible>False</Visible>
       <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Xna.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>Microsoft XNA Framework Redistributable 3.0</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>

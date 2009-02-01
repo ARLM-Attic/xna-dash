@@ -32,7 +32,8 @@ namespace XNADash
         public FrameRateCounter(Game game, Vector2 position)
             : base(game)
         {
-            content = new ContentManager(game.Services);
+            if (game != null && game.Services != null) 
+                content = new ContentManager(game.Services);
             content.RootDirectory = "Content";
             drawPosition = position;
             drawPositionShadow = new Vector2(position.X - 1, position.Y - 1);

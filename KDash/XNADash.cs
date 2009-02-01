@@ -6,10 +6,13 @@ using System.Threading;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using TomShane.Neoforce.Controls;
 using XNADash.Animation;
+using XNADash.GUI;
 using XNADash.Level;
 using XNADash.SoundFx;
 using XNADash.Sprites;
+using EventArgs=System.EventArgs;
 
 #endregion
 
@@ -38,6 +41,8 @@ namespace XNADash
         private int diamondsCollected;
         private SpriteBatch spriteBatch;
         public bool visibilityChanged;
+        private Manager manager;
+        private MainWindow mainWindow;
 
         /// <summary>
         /// Default constructor.
@@ -53,6 +58,18 @@ namespace XNADash
             HUDPosition = new Vector2(30, graphics.PreferredBackBufferHeight - 75);
 
             playerIsDead = false;
+
+            // Create an instance of manager using Default skin. We set the fourth parameter to true,
+            // so the instance of manager is registered as an XNA game component and methods
+            // like Initialize(), Update() and Draw() are called automatically in the game loop.
+            // If you set this parameter to false, you have to call Manager.Initialize(), 
+            // Manager.Update() and Manager.Draw() manually in their respective overriden methods
+            // of the game class.
+            // If you use two-parameter constructor, Default skin is used and manager is registered.
+            manager = new Manager(this, graphics);
+            manager.Window.BackColor = System.Drawing.Color.Black;
+            // Setting up the shared skins directory
+            manager.SkinDirectory = @"Skins";
         }
 
         /// <summary>
@@ -150,7 +167,7 @@ namespace XNADash
             gameHUD.LevelTimer.SetTimer(CurrentLevel.FinishTime);
             gameHUD.LevelTimer.Start();
 
-            SoundFxManager.Instance.PlaySound(SoundFxManager.CueEnums.start);
+            mainWindow = new MainWindow(manager);
         }
 
         void OnTileCollision(TileTypeEnum tileType)
@@ -159,7 +176,9 @@ namespace XNADash
             {
                 SoundFxManager.Instance.PlaySound(SoundFxManager.CueEnums.applause);
                 Thread.Sleep(6000);
-                Exit();
+                GameStateManager.CurrentGameState = GameStateManager.GameState.Menu;
+                mainWindow.Show();
+                IsMouseVisible = true;
             }
         }
 
@@ -179,46 +198,57 @@ namespace XNADash
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            HandleInput(gameTime);
-
-            playerSprite.Move(gameTime);
-
-            CurrentLevel.NpcContainer.Update(gameTime);
-
-            if (playerIsDead == false)
+            if (GameStateManager.CurrentGameState == GameStateManager.GameState.Game)
             {
-                // Check if player touches an enemy
-                foreach (EnemySprite sprite in CurrentLevel.NpcContainer.NPCList)
+                IsMouseVisible = false;
+
+                HandleInput(gameTime);
+
+                playerSprite.Move(gameTime);
+
+                CurrentLevel.NpcContainer.Update(gameTime);
+
+                if (playerIsDead == false)
                 {
-                    if (playerSprite.CollidesWith(sprite))
+                    // Check if player touches an enemy
+                    foreach (EnemySprite sprite in CurrentLevel.NpcContainer.NPCList)
                     {
-                        playerIsDead = true;
-                        Thread.Sleep(3000);
-                        Exit();
+                        if (playerSprite.CollidesWith(sprite))
+                        {
+                            playerIsDead = true;
+                            Thread.Sleep(3000);
+                            GameStateManager.CurrentGameState = GameStateManager.GameState.Menu;
+                            mainWindow.Show();
+                            IsMouseVisible = true;
+                        }
                     }
                 }
-            }
 
-            // Check the tiles the player touches
-            List<Tile> tileToCheck = CurrentLevel.GetTiles(playerSprite.bounds);
-            foreach (Tile tile in tileToCheck)
-            {
-                if (tile != null && playerSprite.CollidesWith(tile))
+                // Check the tiles the player touches
+                List<Tile> tileToCheck = CurrentLevel.GetTiles(playerSprite.bounds);
+                foreach (Tile tile in tileToCheck)
                 {
-                    collisionDebugString = "Player collides with tile " + tile.Position + " " + tile.TileType;
-                    tile.Collision = true;
+                    if (tile != null && playerSprite.CollidesWith(tile))
+                    {
+                        collisionDebugString = "Player collides with tile " + tile.Position + " " + tile.TileType;
+                        tile.Collision = true;
+                    }
                 }
+
+                // Make camera follow player
+                int movement = (int) (playerSprite.Speed*(float) gameTime.ElapsedGameTime.TotalMilliseconds/1000);
+                camera.Speed = movement;
+                camera.CenterAt(playerSprite.CenterPosition);
+
+                // Update the HUD
+                gameHUD.Update(Score.ToString(), DiamondsCollected, currentLevel.DiamondsToCollect);
+
+                base.Update(gameTime);
             }
-
-            // Make camera follow player
-            int movement = (int) (playerSprite.Speed*(float) gameTime.ElapsedGameTime.TotalMilliseconds/1000);
-            camera.Speed = movement;
-            camera.CenterAt(playerSprite.CenterPosition);
-
-            // Update the HUD
-            gameHUD.Update(Score.ToString(), DiamondsCollected, currentLevel.DiamondsToCollect);
-
-            base.Update(gameTime);
+            else
+            {
+                base.Update(gameTime);
+            }
         }
 
         /// <summary>
@@ -227,38 +257,50 @@ namespace XNADash
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            // Since we're drawing in order from back to front, depth buffer is disabled
-            graphics.GraphicsDevice.RenderState.DepthBufferEnable = false;
-            graphics.GraphicsDevice.Clear(Color.Black);
+            if (GameStateManager.CurrentGameState == GameStateManager.GameState.Game)
+            {
+                // Since we're drawing in order from back to front, depth buffer is disabled
+                graphics.GraphicsDevice.RenderState.DepthBufferEnable = false;
+                graphics.GraphicsDevice.Clear(Color.Black);
 
-            // Prepare scene
-            sceneGraph.NewScene();
+                // Prepare scene
+                sceneGraph.NewScene();
 
-            CurrentLevel.ResetCollisionDebugInfo();
-            spriteBatch.Begin(SpriteBlendMode.AlphaBlend, SpriteSortMode.Deferred, SaveStateMode.SaveState);
-            // AddToScene the background
-            CurrentLevel.Draw(sceneGraph, spriteBatch, Color.Black);
-            // AddToScene the player
-            sceneGraph.AddToScene(playerSprite.ToSceneGraphNode());
-            // AddToScene the enemies
-            sceneGraph.AddToScene(CurrentLevel.NpcContainer.AddToScene());
+                CurrentLevel.ResetCollisionDebugInfo();
+                spriteBatch.Begin(SpriteBlendMode.AlphaBlend, SpriteSortMode.Deferred, SaveStateMode.SaveState);
+                // AddToScene the background
+                CurrentLevel.Draw(sceneGraph, spriteBatch, Color.Black);
+                // AddToScene the player
+                sceneGraph.AddToScene(playerSprite.ToSceneGraphNode());
+                // AddToScene the enemies
+                sceneGraph.AddToScene(CurrentLevel.NpcContainer.AddToScene());
 
-            // Write debug info
-            sceneGraph.AddText("Player position: " + playerSprite.Position + " Player destination: " +
-                               playerSprite.Destination);
-            sceneGraph.AddText("Tile position:" + CurrentLevel.ToTileCoordinate(playerSprite.Position));
-            sceneGraph.AddText("Player is dead:" + playerIsDead);
-            sceneGraph.AddText("Player keypress: " + playerSprite.currentMovement.XDirection + " " +
-                               playerSprite.currentMovement.YDirection);
-            sceneGraph.AddText(collisionDebugString);
-            sceneGraph.AddText("Cam position:" + camera.Position);
+                // Write debug info
+                sceneGraph.AddText("Player position: " + playerSprite.Position + " Player destination: " +
+                                   playerSprite.Destination);
+                sceneGraph.AddText("Tile position:" + CurrentLevel.ToTileCoordinate(playerSprite.Position));
+                sceneGraph.AddText("Player is dead:" + playerIsDead);
+                sceneGraph.AddText("Player keypress: " + playerSprite.currentMovement.XDirection + " " +
+                                   playerSprite.currentMovement.YDirection);
+                sceneGraph.AddText(collisionDebugString);
+                sceneGraph.AddText("Cam position:" + camera.Position);
 
-            sceneGraph.Draw();
+                sceneGraph.Draw();
 
-            gameHUD.Draw(bigFont, HUDPosition);
+                gameHUD.Draw(bigFont, HUDPosition);
 
-            base.Draw(gameTime);
-            spriteBatch.End();
+                //base.Draw(gameTime);
+                spriteBatch.End();
+            }
+            else
+            {
+                if (GameStateManager.CurrentGameState == GameStateManager.GameState.Menu)
+                    IsMouseVisible = true;
+
+                GraphicsDevice.Clear(Color.Black);
+
+                base.Draw(gameTime);
+            }
         }
 
         /// <summary>
