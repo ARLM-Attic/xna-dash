@@ -1,7 +1,6 @@
 
 namespace XNADash
 {
-    Check build server
     /*
     public class DashEvent
     {
