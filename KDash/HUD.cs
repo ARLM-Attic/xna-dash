@@ -27,7 +27,6 @@ namespace XNADash
         /// <param name="sb">The sprite batch use draw with</param>
         public HUD(SpriteBatch sb)
         {
-            MAKE BUILD FAIL
             batch = sb;
             Score = "Score ";
             TimeLeft = " Time left ";
