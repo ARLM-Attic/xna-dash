@@ -15,7 +15,6 @@ namespace XNADash
     /// </summary>
     public class FrameRateCounter : DrawableGameComponent
     {
-        make build fail
         private readonly ContentManager content;
         private readonly Vector2 drawPosition;
         private readonly Vector2 drawPositionShadow;
